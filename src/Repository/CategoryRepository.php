@@ -41,15 +41,10 @@ class CategoryRepository extends ServiceEntityRepository
 
     public function findMainCategories(): array
     {
-        $entityManager = $this->getEntityManager();
+        $qb = $this->createQueryBuilder('c')
+            ->where('c.parent is null');
 
-        $query = $entityManager->createQuery(
-            'SELECT c
-            FROM App\Entity\Category c
-            WHERE c.parent IS NULL'
-        );
-
-        return $query->getResult();
+        return $qb->getQuery()->execute();
     }
 
 //    /**
