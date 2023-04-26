@@ -1,0 +1,10 @@
+$custome-colors: (
+	"accent": $accent,
+	"primary-dark": $primary-600,
+	"background": $background,
+);
+
+$theme-colors: map-merge(
+	$map1: $theme-colors,
+	$map2: $custome-colors,
+);

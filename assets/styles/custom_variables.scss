@@ -1,0 +1,23 @@
+$background : #fffef9;
+$primary: #1E555C;
+$accent : #3F784C;
+
+$primary-100 : tint-color($primary, 80%);
+$primary-200 : tint-color($primary, 60%);
+$primary-300 : tint-color($primary, 40%);
+$primary-400 : tint-color($primary, 20%);
+$primary-500 : $primary;
+$primary-600 : shade-color($primary, 20%);
+$primary-700 : shade-color($primary, 40%);
+$primary-800 : shade-color($primary, 60%);
+$primary-900 : shade-color($primary, 80%);
+
+$accent-100 : shade-color($accent, 80%);
+$accent-200 : shade-color($accent, 60%);
+$accent-300 : shade-color($accent, 40%);
+$accent-400 : shade-color($accent, 20%);
+$accent-500 : $accent;
+$accent-600 : shade-color($accent, 20%);
+$accent-700 : shade-color($accent, 40%);
+$accent-800 : shade-color($accent, 60%);
+$accent-900 : shade-color($accent, 80%);

@@ -1,0 +1,16 @@
+.btn-menu {
+	--bs-btn-font-weight: 600;
+	--bs-btn-color: var(--bs-white);
+	--bs-btn-bg: transparent;
+	--bs-btn-border-color: var(--bs-white);
+	--bs-btn-hover-color: var(--bs-white);
+	--bs-btn-hover-bg: rgba(0,0,0,0.3);
+	--bs-btn-hover-border-color: transparent;
+	--bs-btn-focus-shadow-rgb: var(--bs-light);
+	--bs-btn-active-color: var(--bs-white);
+	--bs-btn-active-bg: #{shade-color($light, 80%)};
+	--bs-btn-active-border-color: transparent;
+	:hover {
+		backdrop-filter: blur(25px);
+	}
+}
