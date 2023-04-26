@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{category.name}}{% endblock %}
+
+{% block body %}
+	<div class="container-xxl">
+		<h1>Toutes les catégories</h1>
+
+		<div class="row row-cols-6 g-2">
+			{% for product in products %}
+				<div class="p-3 border">
+					<a href="{{path('app_product_show', {'url': product.url})}}">{{product.name}}</a>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

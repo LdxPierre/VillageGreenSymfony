@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les catégories
+{% endblock %}
+
+{% block body %}
+	<div class="container-xxl">
+		<h1>Toutes les catégories</h1>
+
+		<div class="d-flex gap-2">
+			{% for category in categories %}
+				<div class="p-3 border">
+					<a href="{{path('app_category_show', {'url': category.url})}}">{{category.name}}</a>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

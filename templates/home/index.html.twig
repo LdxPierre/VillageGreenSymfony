@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Village Green{% endblock %}
+{% block title %}Village Green
+{% endblock %}
 
 {% block body %}
-<h1>Home</h1>
+	<div class="container-xxl">
+		<h1>Home</h1>
+		<a class='btn btn-accent' href="{{path('app_category_index')}}">Category Index</a>
+	</div>
 
 {% endblock %}
