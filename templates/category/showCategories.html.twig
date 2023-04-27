@@ -6,7 +6,7 @@
 
 {% block body %}
 	<div class="container-xxl">
-	
+
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb my-2">
 				<li class="breadcrumb-item">
@@ -24,12 +24,17 @@
 			</ol>
 		</nav>
 
-		<h1>Toutes les catégories</h1>
+		<h1>{{category.name}}</h1>
 
-		<div class="row row-cols-6 g-2">
+		<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-2">
 			{% for childCat in childCategories %}
-				<div class="p-3 border">
-					<a href="{{path('app_category_show', {'url': childCat.url})}}">{{childCat.name}}</a>
+				<div class="col">
+					<div class="text-center h-100 p-2">
+						<a class='text-decoration-none' href="{{path('app_category_show', {'url': childCat.url})}}">
+							<img src="https://www.atelierdupiano.fr/3855-large_default/guitare-classique-l%C3%A2g-slim-tn170asce.jpg" alt="{{childCat.name}}" class="img-fluid">
+							<h5 class='mt-3 mb-0'>{{childCat.name}}</h5>
+						</a>
+					</div>
 				</div>
 			{% endfor %}
 		</div>
