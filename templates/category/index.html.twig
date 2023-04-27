@@ -5,6 +5,15 @@
 
 {% block body %}
 	<div class="container-xxl">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb my-2">
+				<li class="breadcrumb-item">
+					<a class='fw-medium text-decoration-none' href="{{path('app_home')}}">Village Green</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current='page'>Catégorie</li>
+			</ol>
+		</nav>
+
 		<h1>Toutes les catégories</h1>
 
 		<div class="d-flex gap-2">

@@ -1,9 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{category.name}}{% endblock %}
+{% block title %}
+	{{category.name}}
+{% endblock %}
 
 {% block body %}
 	<div class="container-xxl">
+
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb my-2">
+				<li class="breadcrumb-item">
+					<a class='fw-medium text-decoration-none' href="{{path('app_home')}}">Village Green</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a class="fw-medium text-decoration-none" href="{{path('app_category_index')}}">Catégorie</a>
+				</li>
+				{% for link in breadcrumbLinks %}
+					<li class="breadcrumb-item">
+						<a class='text-decoration-none fw-medium' href="{{path('app_category_show', {'url': link.url})}}">{{link.name}}</a>
+					</li>
+				{% endfor %}
+				<li class="breadcrumb-item active" aria-current='page'>{{category.name}}</li>
+			</ol>
+		</nav>
+
 		<h1>Toutes les catégories</h1>
 
 		<div class="row row-cols-6 g-2">

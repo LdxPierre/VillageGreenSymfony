@@ -43,14 +43,23 @@ class ProductController extends AbstractController
     #[Route('/{url}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
+        // make dynamically category tree for breadcrumbs
+        $categoryTree = $product->getCategory()->getCategoryTree();
+        array_push($categoryTree, $product->getCategory());
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'breadcrumbLinks' => $categoryTree,
         ]);
     }
 
     #[Route('/{url}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
-    {
+    {   
+        // make dynamically category tree for breadcrumbs
+        $categoryTree = $product->getCategory()->getCategoryTree();
+        array_push($categoryTree, $product->getCategory());
+        
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -63,6 +72,7 @@ class ProductController extends AbstractController
         return $this->renderForm('product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
+            'breadcrumbsLinks' => $categoryTree,
         ]);
     }
 

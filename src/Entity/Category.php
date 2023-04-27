@@ -136,4 +136,25 @@ class Category
 
         return $this;
     }
+
+    // get all parent category if exists, max 10
+    public function getCategoryTree(): array
+    {
+        $array = [];
+        $value = $this->getParent();
+
+        if ($value){
+            array_push($array, $value);
+            
+            for ($i=0; $i < 10; $i++) { 
+                $value = $value->getParent();
+                if ($value) {
+                    array_push($array, $value);
+                } else {
+                    $i = 10;
+                }
+            }
+        }
+        return array_reverse($array);
+    }
 }

@@ -48,6 +48,7 @@ class CategoryController extends AbstractController
             return $this->render('category/showCategories.html.twig', [
                 'category' => $category,
                 'childCategories' => $childCategories,
+                'breadcrumbLinks' => $category->getCategoryTree(),
             ]);
         }
 
@@ -55,6 +56,7 @@ class CategoryController extends AbstractController
         return $this->render('category/showProducts.html.twig', [
             'category' => $category,
             'products' => $products,
+            'breadcrumbLinks' => $category->getCategoryTree(),
         ]);
     }
 
@@ -73,13 +75,14 @@ class CategoryController extends AbstractController
         return $this->renderForm('category/edit.html.twig', [
             'category' => $category,
             'form' => $form,
+            'breadcrumbLinks' => $category->getCategoryTree(),
         ]);
     }
 
     #[Route('/{id}', name: 'app_category_delete', methods: ['POST'])]
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $categoryRepository->remove($category, true);
         }
 
