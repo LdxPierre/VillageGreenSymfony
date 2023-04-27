@@ -24,14 +24,87 @@
 			</ol>
 		</nav>
 
-		<h1>Toutes les catégories</h1>
+		<h1>{{category.name}}</h1>
 
-		<div class="row row-cols-6 g-2">
-			{% for product in products %}
-				<div class="p-3 border">
-					<a href="{{path('app_product_show', {'url': product.url})}}">{{product.name}}</a>
+		<div class="d-flex flex-column flex-md-row gap-3">
+
+
+			<form class="col-md-4 col-lg-3 accordion" id='accordionFilter'>
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded="false" aria-controls='collapseone'>
+							Marque
+						</button>
+					</h2>
+					<div id="collapseOne" class="accordion-collapse collapse" data-bs-parent='#accordionFilter'>
+						<div class="accordion-body">
+							<ol class="list-unstyled m-0">
+								<li class="form-check">
+									<input class="form-check-input" type="checkbox" name="marque_1" id="marque_1" value="blackstar">
+									<label class="form-check-label" for="marque_1">Blackstar (x)</label>
+								</li>
+								<li class="form-check">
+									<input class="form-check-input" type="checkbox" name="marque_2" id="marque_2" value="Brümmer">
+									<label class="form-check-label" for="marque_2">Brümmer (x)</label>
+								</li>
+								<li class="form-check">
+									<input class="form-check-input" type="checkbox" name="marque_3" id="marque_3" value="Epiphone">
+									<label class="form-check-label" for="marque_3">Epiphone (x)</label>
+								</li>
+							</ol>
+						</div>
+					</div>
 				</div>
-			{% endfor %}
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapsetwo'>
+							Echelle de prix
+						</button>
+					</h2>
+					<div id="collapseTwo" class="accordion-collapse collapse" data-bs-target='#accordionFilter'>
+						<div class="accordion-body">
+							<div class="d-flex align-items-center justify-content-between">
+								<div class="col-4">
+									<input class="form-control form-control-sm p-2" type="number" name="min_price" id="min_price" placeholder="Min">
+								</div>
+								<span class="fw-bold">-</span>
+								<div class="col-4">
+									<input class="form-control form-control-sm p-2" type="number" name="max_price" id="max_price" placeholder="Max">
+								</div>
+								<span class="fw-bold">€</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex flex-column gap-2 mt-2">
+					<input class='btn btn-accent' type="submit" value="Filtrer">
+					<input class='btn btn-outline-danger' type="reset" value="Réinitialiser">
+				</div>
+			</form>
+
+			<div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 g-2">
+				{% for product in products %}
+					<div class="col">
+						<div class="h-100 border p-2 d-flex flex-column justify-content-between gap-2">
+							<div>
+								<a href="{{path('app_product_show', {'url':product.url})}}">
+									<img src="https://www.terredemusique.com/20273-thickbox_default/guitare-electrique-34-eko-s100-noire.jpg" alt="{{product.name}}" class="img-fluid">
+								</a>
+							</div>
+							<div>
+								<a class='text-decoration-none' href="{{path('app_product_show', {'url': product.url})}}">{{product.name}}</a>
+								<p class='fw-light text-success m-0'>
+									<small>En stock</small>
+								</p>
+							</div>
+							<p class='m-0 fw-bold fs-5'>129 €</p>
+							<a class='btn btn-accent' href="#">Ajouter au panier</a>
+						</div>
+					</div>
+				{% else %}
+					<h2>Aucun produit dans cette catégorie</h2>
+				{% endfor %}
+			</div>
 		</div>
 	</div>
 {% endblock %}
