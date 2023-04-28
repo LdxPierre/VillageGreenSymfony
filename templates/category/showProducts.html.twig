@@ -26,63 +26,115 @@
 
 		<h1>{{category.name}}</h1>
 
-		<div class="d-flex flex-column flex-md-row gap-3">
+		<div
+			class="d-flex flex-column gap-3">
 
-
-			<form class="col-md-4 col-lg-3 accordion" id='accordionFilter'>
-				<div class="accordion-item">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded="false" aria-controls='collapseone'>
-							Marque
-						</button>
-					</h2>
-					<div id="collapseOne" class="accordion-collapse collapse" data-bs-parent='#accordionFilter'>
-						<div class="accordion-body">
-							<ol class="list-unstyled m-0">
-								<li class="form-check">
-									<input class="form-check-input" type="checkbox" name="marque_1" id="marque_1" value="blackstar">
-									<label class="form-check-label" for="marque_1">Blackstar (x)</label>
-								</li>
-								<li class="form-check">
-									<input class="form-check-input" type="checkbox" name="marque_2" id="marque_2" value="Brümmer">
-									<label class="form-check-label" for="marque_2">Brümmer (x)</label>
-								</li>
-								<li class="form-check">
-									<input class="form-check-input" type="checkbox" name="marque_3" id="marque_3" value="Epiphone">
-									<label class="form-check-label" for="marque_3">Epiphone (x)</label>
-								</li>
-							</ol>
-						</div>
+			{# small device filters #}
+			<div>
+				<div class="d-md-none row row-cols-2 g-2 mt-2">
+					<div class="col m-0">
+						<button class="btn btn-outline-primary col-12" type='button' data-bs-toggle='modal' data-bs-target='#modalForm'>Filtres</button>
+					</div>
+					<div class="col m-0">
+						<select class='btn btn-outline-primary col-12 h-100' name="mSort" id="mSort">
+							<option value="name_ASC">Alphabétique A-Z</option>
+							<option value="name_DESC">Alphabétique Z-A</option>
+							<option value="price_ASC">Du - cher au + cher</option>
+							<option value="price_DESC">Du + cher au - cher</option>
+						</select>
 					</div>
 				</div>
-				<div class="accordion-item">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapsetwo'>
-							Echelle de prix
-						</button>
-					</h2>
-					<div id="collapseTwo" class="accordion-collapse collapse" data-bs-target='#accordionFilter'>
-						<div class="accordion-body">
-							<div class="d-flex align-items-center justify-content-between">
-								<div class="col-4">
-									<input class="form-control form-control-sm p-2" type="number" name="min_price" id="min_price" placeholder="Min">
+
+				{# modalForm #}
+				<form class="modal fade" id="modalForm" tabindex='-1' aria-labelledby='modalFormLabel' aria-hidden='true'>
+					<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="modalFormLabel">Filtres</h4>
+								<button class="btn-close" type='button' data-bs-dismiss='modal' aria-label='Close'></button>
+							</div>
+							<div class="modal-body p-0">
+								<div
+									class='border-bottom py-2 px-3'>
+									{# Marque #}
+									<h5>Marque</h5>
+									<ul class="p-0 m-0">
+										<li class='form-check d-flex align-items-center gap-2 p-0 m-0'>
+											<input class='form-check-input m-0' type="checkbox" name="mMarque1" id="mMarque1">
+											<label class='form-check-label flex-fill py-2' for="mMarque1">Marque 1</label>
+										</li>
+										<li class='form-check d-flex align-items-center gap-2 p-0 m-0'>
+											<input class='form-check-input m-0' type="checkbox" name="mMarque2" id="mMarque2">
+											<label class='form-check-label flex-fill py-2' for="mMarque2">Marque 2</label>
+										</li>
+									</ul>
 								</div>
-								<span class="fw-bold">-</span>
-								<div class="col-4">
-									<input class="form-control form-control-sm p-2" type="number" name="max_price" id="max_price" placeholder="Max">
+								<div
+									class='border-bottom py-2 px-3'>
+									{# price range #}
+									<h5 class='mb-3'>Echelle de prix</h5>
+									<ul class='p-0'>
+										<li class='d-flex align-items-center gap-2'>
+											<input class='form-control' type="text" name="min" id="min" min='0' max='99999'>
+											<span>-</span>
+											<input class='form-control' type="text" name="max" id="max" min='1' max='99999'>
+											<span>€</span>
+										</li>
+									</ul>
 								</div>
-								<span class="fw-bold">€</span>
+							</div>
+							<div class="modal-footer justify-content-center border-0">
+								<input type='submit' class="btn btn-primary col-12" value='Valider'>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="d-flex flex-column gap-2 mt-2">
-					<input class='btn btn-accent' type="submit" value="Filtrer">
-					<input class='btn btn-outline-danger' type="reset" value="Réinitialiser">
-				</div>
-			</form>
+				</form>
+			</div>
 
-			<div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 g-2">
+			{# medium device filters #}
+			<div class="d-none d-md-flex align-items-center gap-5">
+				<div class="flex-fill d-flex justify-content-between">
+					<form class="d-flex gap-2">
+						<div class="dropdown">
+							<button class="dropdown-toggle btn btn-outline-primary" type='button' data-bs-toggle='dropdown' data-bs-auto-close='outside' aria-expanded='false'>
+								Marque
+							</button>
+							<ul class="dropdown-menu p-2">
+								<li class='form-check d-flex align-items-center gap-2 p-0 m-0'>
+									<input class='form-check-input m-0' type="checkbox" name="marque1" id="marque1">
+									<label class='form-check-label flex-fill py-2' for="marque1">Marque 1</label>
+								</li>
+							</ul>
+						</div>
+						<div class="dropdown">
+							<button class="dropdown-toggle btn btn-outline-primary" type='button' data-bs-toggle='dropdown' data-bs-auto-close='outside' aria-expanded='false'>
+								Echelle de prix
+							</button>
+							<ul class="dropdown-menu">
+								<li class='p-2 d-flex align-items-center gap-2'>
+									<input class='form-control' type="text" name="min" id="min" min='0' max='99999'>
+									<span>-</span>
+									<input class='form-control' type="text" name="max" id="max" min='1' max='99999'>
+									<span>€</span>
+								</li>
+							</ul>
+						</div>
+						<input class='btn btn-primary' type="submit" value="Filtrer">
+						<input class='btn btn-outline-danger' type="reset" value="Réinitialiser">
+					</form>
+					<div>
+						<select name="sort" id="sort" class='h-100 btn btn-outline-primary'>
+							<option value="name_ASC">Alphabétique A-Z</option>
+							<option value="name_DESC">Alphabétique Z-A</option>
+							<option value="price_ASC">Du - cher au + cher</option>
+							<option value="price_DESC">Du + cher au - cher</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			{# products list #}
+			<div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 g-2">
 				{% for product in products %}
 					<div class="col">
 						<div class="h-100 border p-2 d-flex flex-column justify-content-between gap-2">
