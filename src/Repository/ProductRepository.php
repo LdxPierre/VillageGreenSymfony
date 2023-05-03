@@ -39,6 +39,75 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Return array of filtered product objects
+     */ 
+    public function filter(array $filters): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.category =:id')
+            ->setParameter('id', $filters['categoryId']);
+
+        if ($filters['brands'] != null) {
+            $qb = $qb->andWhere('p.brand IN (:brand)')
+            ->setParameter('brand', $filters['brands']);
+        }
+
+        if ($filters['min'] != null && $filters['min'] != '0' && $filters['min'] != '') {
+            $qb = $qb->andWhere('p.price >:min')
+                ->setParameter('min', $filters['min']);
+        }
+        
+        if ($filters['max'] != null && $filters['max'] != '0' && $filters['max'] != '') {
+            $qb = $qb->andWhere('p.price <:max')
+                ->setParameter('max', $filters['max']);
+        }
+        
+        switch ($filters['sort']) {
+            case 'name_ASC':
+                $qb->orderBy('p.name', 'ASC');
+                break;
+            case 'name_DESC':
+                $qb->orderBy('p.name', 'DESC');
+                break;
+            case 'price_ASC':
+                $qb->orderBy('p.price', 'ASC');
+                break;
+            case 'price_DESC':
+                $qb->orderBy('p.price', 'DESC');
+                break;
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Return a array of unique brands
+     */
+    public function fetchUniqueBrands($categoryId = null)
+    {
+        // return array of product objects
+        $qb = $this->createQueryBuilder('p')
+            ->groupBy('p.brand')
+            ->orderBy('p.brand');
+
+        // if a category is passed in arguments
+        if($categoryId != null) {
+            $qb = $qb->andWhere('p.category = :id')
+                ->setParameter('id', $categoryId);
+        }
+        
+        $qb = $qb->getQuery()->getResult();
+        
+        // return a array of brands
+        $result = [];
+        foreach($qb as $p){
+            array_push($result, $p->getBrand());
+        }
+
+        return $result;
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
