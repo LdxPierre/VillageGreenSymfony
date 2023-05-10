@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier
+{% endblock %}
+
+{% block body %}
+	<div
+		class="container-xxl">
+
+		{# Breadcumbs #}
+		<nav class='d-none d-md-block' aria-label="breadcrumb">
+			<ol class="breadcrumb my-2">
+				<li class="breadcrumb-item">
+					<a class='p-2' href="{{path('app_home')}}">
+						<i class="fa-solid fa-house"></i>
+					</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current='page'>Votre panier</li>
+			</ol>
+		</nav>
+
+		<h1 class='my-2'>Votre Panier</h1>
+
+		<div class="row gx-5">
+			<div class="col-md-8 order-1">
+				<div class="d-flex flex-column">
+					{% if cart is empty %}
+						<h2>Vous avez aucun produit dans le panier</h2>
+					{% else %}
+						{% for item in cart %}
+							<div class="border-bottom border-dark py-2 d-flex">
+								<div class="col-2">
+									<a href="{{path('app_product_show', {'url': item.product.url})}}">
+										<img class='img-fluid' src="https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/561026/18011037_800.jpg" alt="">
+									</a>
+								</div>
+								<div class="flex-fill px-2">
+									<a href={{path('app_product_show', {'url': item.product.url} )}} class='m-0 fs-5 text-decoration-none'>{{item.product.name}}</a>
+									<p class='m-0 fw-light'>Quantité :
+										{{item.quantity}}</p>
+									<p class='m-0 fw-light text-success'>Disponible</p>
+								</div>
+								<div class="d-flex flex-column align-items-end justify-content-between">
+									<p class='m-0 fw-bold fs-5'>{{item.product.price * item.quantity}}
+										€</p>
+									<form method="post" action="{{ path('app_cart_item_delete', {'id': item.id}) }}">
+										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+										<button class="btn text-danger border-0">Supprimer</button>
+									</form>
+								</div>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+			<div class="col-md-4 order-0 order-md-1 mb-3 m-md-0">
+				<div class='border border-dark rounded d-flex flex-column overflow-hidden'>
+					<div class="bg-primary text-light text-center d-flex justify-content-center align-items-center p-3">
+						<h5 class='m-0'>Votre commande</h5>
+					</div>
+					<div class="px-3 pb-3">
+						<ul class='m-0 list-unstyled'>
+							{% for item in cart %}
+								<li class='fw-light border-bottom py-2'>
+									{{item.quantity}}
+									x
+									{{item.product.name}}
+								</li>
+							{% endfor %}
+						</ul>
+						{% if cart %}
+							<div class="d-flex justify-content-between elign-items-center py-2">
+								<span class='fs-5 fw-bold'>Total :</span>
+								<span class='fs-5 fw-bold'>{{total}}
+									€</span>
+							</div>
+							<button class='btn btn-accent w-100'>Valider la commande</button>
+						{% else %}
+							<button class='btn btn-secondary w-100 disabled mt-3'>Valider la commande</button>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

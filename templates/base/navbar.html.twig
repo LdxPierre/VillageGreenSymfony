@@ -8,10 +8,11 @@
 						<button class="btn text-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-expanded="false" aria-label="Toggle navigation">
 							<i class="fa-solid fa-bars fa-xl"></i>
 						</button>
-						<a class="text-light fw-bold" href="{{path('app_home')}}">Village Green</a>
+						<a class="text-light fs-3 text-decoration-none fw-bold" href="{{path('app_home')}}">Village Green</a>
 						<div class="d-flex align-items-center gap-2">
-							<a class="text-light p-2" href="#">
-								<i class="fa-solid fa-bag-shopping fa-xl"></i>
+							<a class="px-3 py-2 text-decoration-none bg-light rounded-pill" href="{{path('app_cart')}}">
+								<i class="fa-solid fa-bag-shopping fa-xl me-2"></i>
+								{{cartCount}}
 							</a>
 							<a class="text-light p-2" href="#">
 								<i class="fa-solid fa-user fa-xl"></i>
@@ -23,9 +24,9 @@
 							<input class="form-control rounded-pill py-2 blur-dark text-light border-0" type="search">
 						</form>
 						<div class="d-none d-md-flex align-items-center gap-4">
-							<a class="text-decoration-none fw-medium text-light" href="#">
+							<a class="text-decoration-none fw-medium text-light" href="{{path('app_cart')}}">
 								<i class="fa-solid fa-bag-shopping"></i>
-								Panier
+								Panier ({{cartCount}})
 							</a>
 							<a class="text-decoration-none fw-medium text-light" href="#">
 								<i class="fa-solid fa-user"></i>

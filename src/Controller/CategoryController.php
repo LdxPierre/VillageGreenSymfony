@@ -41,7 +41,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{url}', name: 'app_category_show', methods: ['GET'])]
+    #[Route('/{url}', name: 'app_category_show', methods: ['GET', 'POST'])]
     public function show(Category $category, Request $request, ProductRepository $productRepository): Response
     {
         // return child categories if exists
@@ -62,8 +62,8 @@ class CategoryController extends AbstractController
             $filters['brands'] = [];
             $filters['categoryId'] = $category->getId();
             // stock all brands checked in filters['brands']
-            foreach($params as $key=>$value){
-                if (strstr($key, 'brand_')){
+            foreach ($params as $key => $value) {
+                if (strstr($key, 'brand_')) {
                     array_push($filters['brands'], $value);
                 }
             }
@@ -80,7 +80,7 @@ class CategoryController extends AbstractController
                 'breadcrumbLinks' => $category->getCategoryTree(),
             ]);
         }
-        
+
         // render all products
         $products = $category->getProducts();
         return $this->render('category/showProducts.html.twig', [

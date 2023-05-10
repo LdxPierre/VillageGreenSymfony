@@ -43,23 +43,23 @@ class ProductController extends AbstractController
     #[Route('/{url}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
-        // make dynamically category tree for breadcrumbs
+        // generate links for breadcrumb
         $categoryTree = $product->getCategory()->getCategoryTree();
         array_push($categoryTree, $product->getCategory());
 
         return $this->render('product/show.html.twig', [
             'product' => $product,
-            'breadcrumbLinks' => $categoryTree,
+            'breadcrumbLinks' => $categoryTree
         ]);
     }
 
     #[Route('/{url}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
-    {   
+    {
         // make dynamically category tree for breadcrumbs
         $categoryTree = $product->getCategory()->getCategoryTree();
         array_push($categoryTree, $product->getCategory());
-        
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -79,7 +79,7 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
             $productRepository->remove($product, true);
         }
 

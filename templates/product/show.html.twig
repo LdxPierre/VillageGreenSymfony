@@ -30,7 +30,7 @@
 
 		<div class="d-flex gap-3 my-2 mt-md-0 align-items-center">
 			<a class='p-1' href="{{path('app_category_show', {'url': product.category.url})}}">
-				<i class="fa-solid fa-arrow-left fs-2 mt-2"></i>
+				<i class="fa-solid fa-arrow-left fs-2 mt-1"></i>
 			</a>
 			<h1 class='m-0 fw-light'>
 				{{product.brand}}
@@ -51,41 +51,38 @@
 				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis temporibus distinctio eos tempore quo minima atque eius, cum obcaecati possimus consequuntur ex neque aut dignissimos facere! Enim quas maiores neque.</p>
 			</div>
 
-			{# Cart for medium device #}
-			<div class="col-3 d-none d-md-flex flex-column align-items-center border p-3">
+
+			<form class='col-3 d-none d-md-flex flex-column align-items-center border p-3 gap-3' method='POST' action="{{path('app_cart_add_item')}}">
 				<span class='fs-1 fw-bold'>{{product.price}}€</span>
 				<span class="fw-light text-success">Disponible</span>
-				<form class='d-flex col-12 flex-column gap-2 mt-5'>
-					<div class='d-flex align-items-center'>
-						<label class='pe-3' for="quantity">Quantité</label>
-						<select class='form-control' name="quantity" id="quantity">
-							<option value="1" selected>1</option>
-							{% for i in 1..100 %}
-								<option value="{{i}}">{{i}}</option>
-							{% endfor %}
-						</select>
-					</div>
+				<div class="col-12 d-flex align-items-center">
+					<label class='form-label pe-3 m-0' for="quantity">Quantité:</label>
+					<select class='form-control' name="quantity">
+						{% for i in 1..100 %}
+							<option value="{{i}}">{{i}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<input type="hidden" name="id" value='{{product.id}}'>
+				<input class='col-12 btn btn-accent' type="submit" value="Ajouter au panier">
+			</form>
+
+			<div class="d-flex d-md-none align-items-center justify-content-between p-2 gap-2 bg-primary flex-wrap fixed-bottom">
+				<span class="fs-3 fw-bold text-light">
+					{{product.price}}
+					€
+				</span>
+				<form action="{{path('app_cart_add_item')}}" method="POST" class="d-flex align-items-center gap-2">
+					<label class='text-light' for="quantity">Quantité</label>
+					<select class='form-control' name="quantity" id="quantity_sm">
+						{% for i in 1..100 %}
+							<option value="{{i}}">{{i}}</option>
+						{% endfor %}
+					</select>
+					<input type="hidden" name="id" value='{{product.id}}'>
 					<input class='btn btn-accent' type="submit" value="Ajouter au panier">
 				</form>
 			</div>
-
-			{# Cart on small device #}
-			<div class='d-flex d-md-none align-items-center justify-content-between p-2 gap-2 bg-primary flex-wrap fixed-bottom'>
-				<span class='fs-3 fw-bold text-light'>{{product.price}}€</span>
-				<form class='d-flex align-items-center gap-2'>
-					<label class='text-light' for="sm_quantity">Quantité :</label>
-					<div class="flex-shrink-1">
-						<select class='form-control' name="quantity" id="sm_quantity">
-							<option value="1" selected>1</option>
-							{% for i in 1..100 %}
-								<option value="{{i}}">{{i}}</option>
-							{% endfor %}
-						</select>
-					</div>
-					<input class='btn btn-accent' type="submit" value="Ajouter au panier">
-				</form>
-			</div>
-
 		</div>
 	</div>
-{% endblock %}
+</div>{% endblock %}

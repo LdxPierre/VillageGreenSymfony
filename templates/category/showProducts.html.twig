@@ -43,21 +43,22 @@
 								<h4 class="modal-title" id="modalFormLabel">Filtres</h4>
 								<button class="btn-close" type='button' data-bs-dismiss='modal' aria-label='Close'></button>
 							</div>
-							<div class="modal-body p-0">
+							<div
+								class="modal-body p-0">
 								{# sort by #}
 								<div class='border-bottom py-2 px-3'>
 									<h5>Trier par</h5>
 									<select class='btn btn-outline-primary py-2 col-12' name="sort" id="mSort">
-										<option value="name_ASC" {% if filters is defined and filters.sort == 'name_ASC' %}selected{% endif %}>
+										<option value="name_ASC" {% if filters is defined and filters.sort == 'name_ASC' %} selected {% endif %}>
 											Trier : Alphabétique A-Z
 										</option>
-										<option value="name_DESC" {% if filters is defined and filters.sort == 'name_DESC' %}selected{% endif %}>
+										<option value="name_DESC" {% if filters is defined and filters.sort == 'name_DESC' %} selected {% endif %}>
 											Trier : Alphabétique Z-A
 										</option>
-										<option value="price_ASC" {% if filters is defined and filters.sort == 'price_ASC' %}selected{% endif %}>
+										<option value="price_ASC" {% if filters is defined and filters.sort == 'price_ASC' %} selected {% endif %}>
 											Trier : Du - cher au + cher
 										</option>
-										<option value="price_DESC" {% if filters is defined and filters.sort == 'price_DESC' %}selected{% endif %}>
+										<option value="price_DESC" {% if filters is defined and filters.sort == 'price_DESC' %} selected {% endif %}>
 											Trier : Du + cher au - cher
 										</option>
 									</select>
@@ -132,16 +133,16 @@
 							</div>
 							<div>
 								<select name="sort" id="sort" class='h-100 btn btn-outline-primary'>
-									<option value="name_ASC" {% if filters is defined and filters.sort == 'name_ASC' %}selected{% endif %}>
+									<option value="name_ASC" {% if filters is defined and filters.sort == 'name_ASC' %} selected {% endif %}>
 										Trier : Alphabétique A-Z
 									</option>
-									<option value="name_DESC" {% if filters is defined and filters.sort == 'name_DESC' %}selected{% endif %}>
+									<option value="name_DESC" {% if filters is defined and filters.sort == 'name_DESC' %} selected {% endif %}>
 										Trier : Alphabétique Z-A
 									</option>
-									<option value="price_ASC" {% if filters is defined and filters.sort == 'price_ASC' %}selected{% endif %}>
+									<option value="price_ASC" {% if filters is defined and filters.sort == 'price_ASC' %} selected {% endif %}>
 										Trier : Du - cher au + cher
 									</option>
-									<option value="price_DESC" {% if filters is defined and filters.sort == 'price_DESC' %}selected{% endif %}>
+									<option value="price_DESC" {% if filters is defined and filters.sort == 'price_DESC' %} selected {% endif %}>
 										Trier : Du + cher au - cher
 									</option>
 								</select>
@@ -173,7 +174,11 @@
 									</div>
 									<p class='m-0 fw-bold fs-5'>{{product.price}}
 										€</p>
-									<a class='btn btn-accent' href="#">Ajouter au panier</a>
+									<form class='m-0' method='POST' action="{{path('app_cart_add_item')}}" name='add_to_cart'>
+										<input type="hidden" name='quantity' value='1'>
+										<input type="hidden" name="id" value='{{product.id}}'>
+										<input class='btn btn-accent col-12' type="submit" value="Ajouter au panier">
+									</form>
 								</div>
 							</div>
 						{% else %}
