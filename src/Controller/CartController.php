@@ -43,6 +43,7 @@ class CartController extends AbstractController
     {
         $user = $this->getUser();
         $session = $request->getSession();
+        $session->start();
         $product = $productRepository->findOneBy(['id' => $request->get('id')]);
 
         $item = new CartItem();
