@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	VillageGreen - Mes informations personnelles
+{% endblock %}
+
+{% block body %}
+	<div
+		class="container-xxl p-0">
+
+		{# Breadcumbs for medium device #}
+		<nav class='d-none d-md-block' aria-label="breadcrumb">
+			<ol class="breadcrumb my-2">
+				<li class="breadcrumb-item">
+					<a class='p-2' href="{{path('app_home')}}">
+						<span class="material-symbols-outlined">
+							home
+						</span>
+					</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a class='text-decoration-none' href="{{path('app_user')}}">Mon compte</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current='page'>Mes informations personnelles</li>
+			</ol>
+		</nav>
+
+		{# heading #}
+		<div class="d-flex align-items-center gap-2 my-2">
+			<a class='d-flex p-2 text-decoration-none' href="{{path('app_user')}}">
+				<span class="material-symbols-outlined fs-1">
+					arrow_back
+				</span>
+			</a>
+			<h1>Mes informations personnelles</h1>
+		</div>
+
+		<div
+			class="row row-cols-1 row-cols-md-2 g-3 m-0">
+
+			{# coordonnées #}
+			<div class="col">
+				<h2>Mes coordonnées</h2>
+
+				<ul class="list-group">
+					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
+						<span class="material-symbols-outlined">
+							alternate_email
+						</span>
+						<div class='flex-fill'>
+							<h6 class='d-block mb-0'>
+								E-mail
+							</h6>
+							<small class='d-block'>
+								{{user.email}}
+							</small>
+						</div>
+						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
+							<span class='material-symbols-outlined p-2'>
+								edit
+							</span>
+						</a>
+					</li>
+					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
+						<span class="material-symbols-outlined">
+							password
+						</span>
+						<div class='flex-fill'>
+							<h6 class='d-block mb-0'>
+								Mot de passe
+							</h6>
+							<small class='d-block'>
+								******
+							</small>
+						</div>
+						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
+							<span class='material-symbols-outlined p-2'>
+								edit
+							</span>
+						</a>
+					</li>
+					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
+						<span class="material-symbols-outlined">
+							account_circle
+						</span>
+						<div class='flex-fill'>
+							<h6 class='d-block mb-0'>
+								Prénom
+							</h6>
+							<small class='d-block'>
+								{% if user.firstname %}
+									{{user.firstname}}
+								{% else %}
+									Non renseigné
+								{% endif %}
+							</small>
+						</div>
+						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
+							<span class='material-symbols-outlined p-2'>
+								edit
+							</span>
+						</a>
+					</li>
+					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
+						<span class="material-symbols-outlined">
+							account_circle
+						</span>
+						<div class='flex-fill'>
+							<h6 class='d-block mb-0'>
+								Nom
+							</h6>
+							<small class='d-block'>
+								{% if user.lastname %}
+									{{user.lastname}}
+								{% else %}
+									Non renseigné
+								{% endif %}
+							</small>
+						</div>
+						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
+							<span class='material-symbols-outlined p-2'>
+								edit
+							</span>
+						</a>
+					</li>
+					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
+						<span class="material-symbols-outlined">
+							call
+						</span>
+						<div class='flex-fill'>
+							<h6 class='d-block mb-0'>
+								Téléphone
+							</h6>
+							<small class='d-block'>
+								{% if user.phone %}
+									{{user.phone}}
+								{% else %}
+									Non renseigné
+								{% endif %}
+							</small>
+						</div>
+						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
+							<span class='material-symbols-outlined p-2'>
+								edit
+							</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			{# adresse #}
+			<div class="col">
+				<h2>Mes adresses</h2>
+				<ul class="list-group">
+					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
+						<span class="material-symbols-outlined">
+							home
+						</span>
+						<div class='flex-fill'>
+							<h6 class='d-block mb-0'>
+								Maison
+							</h6>
+							<small class='d-block'>
+								17 rue du bois, 80640 Thieulloy l'Abbaye, France
+							</small>
+						</div>
+						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
+							<span class="material-symbols-outlined p-2">
+								edit
+							</span>
+						</a>
+					</li>
+					<li class="list-group-item d-flex align-items-center gap-3 pe-2">
+						<span class="material-symbols-outlined">
+							add
+						</span>
+						<a class='p-2' href="#">Ajouter une nouvelle adresse</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
