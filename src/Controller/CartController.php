@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/cart')]
 class CartController extends AbstractController
 {
-    #[Route('/cart', name: 'app_cart')]
+    #[Route('/', name: 'app_cart')]
     public function index(CartItemRepository $cartItemRepository, Request $request): Response
     {
         // get user Object
@@ -21,6 +22,7 @@ class CartController extends AbstractController
         $session = $request->getSession();
         // fetch cart from database if logged else from session
         $cart = $cartItemRepository->getItems($user, $session);
+        $session->set('cart', $cart);
 
         if ($cart != null) {
             foreach ($cart as $item) {
@@ -55,7 +57,7 @@ class CartController extends AbstractController
                 $oldItem->setQuantity($oldItem->getQuantity() + $item->getQuantity());
                 $cartItemRepository->save($oldItem, true);
             } else {
-                // $item->setUser($user);
+                $item->setUser($user);
                 $cartItemRepository->save($item, true);
             }
             $cart = $cartItemRepository->findBy(['user' => $user]);

@@ -23,6 +23,9 @@ class CartItem
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sessionId = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cartItems')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class CartItem
     public function setSessionId(?string $sessionId): self
     {
         $this->sessionId = $sessionId;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
