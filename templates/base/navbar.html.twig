@@ -1,43 +1,62 @@
 {% block body %}
 	<header class="sticky-top">
 		<nav class="navbar navbar-expand-md shadow-sm bg-primary blur bg-opacity-90">
-			<div class="container-xxl d-flex gap-2">
+			<div
+				class="container-xxl d-flex gap-2 p-0 px-md-2">
+				{# brand medium device #}
 				<a class="navbar-brand d-none d-md-block text-light fw-bold" href="{{path('app_home')}}">Village Green</a>
-				<div class="flex-fill d-flex flex-column gap-2">
-					<div class="d-flex d-md-none justify-content-between align-items-center">
-						<button class="btn text-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-expanded="false" aria-label="Toggle navigation">
-							<i class="fa-solid fa-bars fa-xl"></i>
+				{# nav body #}
+				<div
+					class="flex-fill d-flex flex-column gap-2">
+					{# first row small device #}
+					<div class="d-flex d-md-none align-items-center">
+						<button class="btn p-0 text-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="material-symbols-outlined p-2">
+								menu
+							</span>
 						</button>
-						<a class="text-light fs-3 text-decoration-none fw-bold" href="{{path('app_home')}}">Village Green</a>
+						<a class="ms-2 flex-fill fs-5 fw-medium text-light text-decoration-none" href="{{path('app_home')}}">Village Green</a>
 						<div class="d-flex align-items-center gap-2">
-							<a class="px-3 py-2 text-decoration-none bg-light rounded-pill" href="{{path('app_cart')}}">
-								<i class="fa-solid fa-bag-shopping fa-xl me-2"></i>
+							<a class="d-flex align-items-center pe-3 text-decoration-none rounded-pill bg-light" href="{{path('app_cart')}}">
+								<span class="material-symbols-outlined p-2 ms-1">
+									shopping_cart
+								</span>
 								{{cartCount}}
 							</a>
 							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-								<a class='text-light p-2' href="{{path('app_user')}}">
-									<i class="fa-solid fa-user fa-xl"></i>
+								<a class='text-light' href="{{path('app_user')}}">
+									<span class="material-symbols-outlined p-2">
+										person
+									</span>
 								</a>
 							{% else %}
-								<a class="text-light p-2" href="{{path('app_login')}}">
-									<i class="fa-solid fa-user fa-xl"></i>
+								<a class="text-light" href="{{path('app_login')}}">
+									<span class="material-symbols-outlined p-2">
+										person
+									</span>
 								</a>
 							{% endif %}
 						</div>
 					</div>
-					<div class="d-flex justify-content-between align-items center gap-4">
+					{# second row for small device / first for medium device #}
+					<div class="d-flex justify-content-between align-items center gap-3">
 						<form class="flex-fill">
 							<input class="form-control rounded-pill py-2 blur-dark text-light border-0" type="search">
 						</form>
-						<div class="d-none d-md-flex align-items-center gap-4">
-							<a class="text-decoration-none fw-medium text-light" href="{{path('app_cart')}}">
-								<i class="fa-solid fa-bag-shopping"></i>
+						{# second row for medium device #}
+						<div class="d-none d-md-flex align-items-center gap-3">
+							<a class="d-flex gap-1 py-2 text-decoration-none fw-medium text-light" href="{{path('app_cart')}}">
+								<span class="material-symbols-outlined">
+									shopping_cart
+								</span>
 								Panier ({{cartCount}})
 							</a>
 							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 								<div class="dropdown">
-									<a class="text-decoration-none fw-medium text-light" href="#" role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-										<i class="fa-solid fa-user"></i>
+									<a class="d-flex gap-1 py-2 text-decoration-none fw-medium text-light" href="#" role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+										<span class="material-symbols-outlined">
+											person
+										</span>
 										{{app.user.email}}
 									</a>
 									<ul class="dropdown-menu dropdown-menu-end">
@@ -51,8 +70,10 @@
 								</div>
 							{% else %}
 								<div class="dropdown">
-									<a class="text-decoration-none fw-medium text-light" href="#" role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-										<i class="fa-solid fa-user"></i>
+									<a class="d-flex gap-1 py-2 text-decoration-none fw-medium text-light" href="#" role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+										<span class="material-symbols-outlined">
+											person
+										</span>
 										Connexion / Inscription
 									</a>
 									<ul class="dropdown-menu dropdown-menu-end">
@@ -67,18 +88,23 @@
 							{% endif %}
 						</div>
 					</div>
+					{# second row for medium device #}
 					<div class="d-none d-md-flex align-items-center m-0 p-0 gap-2">
-						<button class="btn btn-menu rounded-pill fw-medium" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-expanded="false" aria-label="Toggle navigation">
-							<i class="fa-solid fa-bars me-2"></i>Menu
+						<button class="btn btn-menu d-flex align-items-center ps-3 pe-4 gap-2 rounded-pill fw-medium" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="material-symbols-outlined rounded">
+								menu
+							</span>
+							Menu
 						</button>
 						{% for navCat in navCategories %}
 							<a class="btn btn-outline-light border-0 rounded-pill fw-medium" href="{{path('app_category_show', {'url': navCat.url})}}">{{navCat.name}}</a>
 						{% endfor %}
 					</div>
-
 				</div>
 			</div>
 		</nav>
+
+		{# Menu #}
 		<nav id="offcanvasNav" class="offcanvas offcanvas-start bg-background" tabindex="-1">
 			<div class="offcanvas-header py-4">
 				<a class="fs-3 fw-bold text-decoration-none" href="{{path('app_home')}}">Village Green</a>
@@ -90,6 +116,7 @@
 				{% endfor %}
 			</div>
 		</nav>
+
 	</header>
 
 {% endblock %}
