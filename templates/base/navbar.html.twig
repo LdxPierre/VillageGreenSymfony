@@ -14,7 +14,7 @@
 								<i class="fa-solid fa-bag-shopping fa-xl me-2"></i>
 								{{cartCount}}
 							</a>
-							<a class="text-light p-2" href="#">
+							<a class="text-light p-2" href="{{path('app_login')}}">
 								<i class="fa-solid fa-user fa-xl"></i>
 							</a>
 						</div>
@@ -28,10 +28,37 @@
 								<i class="fa-solid fa-bag-shopping"></i>
 								Panier ({{cartCount}})
 							</a>
-							<a class="text-decoration-none fw-medium text-light" href="#">
-								<i class="fa-solid fa-user"></i>
-								Connexion / Inscription
-							</a>
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<div class="dropdown">
+									<a class="text-decoration-none fw-medium text-light" href="#" role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+										<i class="fa-solid fa-user"></i>
+										{{app.user.email}}
+									</a>
+									<ul class="dropdown-menu dropdown-menu-end">
+										<li class="dropdown-item">
+											<a href="#" class="text-decoration-none">Votre profil</a>
+										</li>
+										<li class="dropdown-item">
+											<a href="{{path('app_logout')}}" class="text-decoration-none">Déconnexion</a>
+										</li>
+									</ul>
+								</div>
+							{% else %}
+								<div class="dropdown">
+									<a class="text-decoration-none fw-medium text-light" href="#" role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+										<i class="fa-solid fa-user"></i>
+										Connexion / Inscription
+									</a>
+									<ul class="dropdown-menu dropdown-menu-end">
+										<li class='dropdown-item'>
+											<a class='text-decoration-none' href="{{path('app_login')}}">Connexion</a>
+										</li>
+										<li class='dropdown-item'>
+											<a class='text-decoration-none' href="{{path('app_register')}}">Inscription</a>
+										</li>
+									</ul>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 					<div class="d-none d-md-flex align-items-center m-0 p-0 gap-2">

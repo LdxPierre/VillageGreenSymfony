@@ -16,9 +16,8 @@
 		{% endblock %}
 	</head>
 
-	<body class='bg-background'>
-	{{ render(controller('App\\Controller\\BaseController::navbar')) }}
-	{% block body %}
-	{% endblock %}
+	<body class='bg-background vh-100 d-flex flex-column'>
+		{{ render(controller('App\\Controller\\BaseController::navbar')) }}
+		{% block body %}{% endblock %}
 	</body>
-	</html>
+</html>

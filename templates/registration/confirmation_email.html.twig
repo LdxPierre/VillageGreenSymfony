@@ -1,0 +1,20 @@
+<style>
+	h1 {
+		color: #FFF;
+	}
+</style>
+<h1>Bonjour, merci de vous être inscrit sur Village Green !
+</h1>
+
+<p>
+	<br><br>
+	Veuillez confirmer votre Email en cliquant sur
+	<a href="{{ signedUrl|raw }}">ce lien</a>.
+</p>
+<p>
+	Ce lien expire dans
+	{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+<p>
+	A bientôt !
+</p>

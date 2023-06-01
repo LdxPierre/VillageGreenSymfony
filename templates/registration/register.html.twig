@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block body %}
+	<div class="container flex-fill d-flex justify-content-center align-items-center py-2">
+		{% for flash_error in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
+
+		<div class="col-12 col-md-6 shadow-lg p-2 p-md-4 rounded-4 bg-light">
+			<h1 class='text-center mb-4'>Inscription</h1>
+
+			{{ form_start(registrationForm, {'attr': {'class': 'd-flex flex-column gap-3','novalidate': 'novalidate'}})}}
+			<div>
+				{{form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'mb-1 ms-2'}})}}
+				{{form_widget(registrationForm.email, {'attr':{'class': 'rounded-3 px-3 py-2'}})}}
+				{{form_help(registrationForm.email)}}
+				{{form_errors(registrationForm.email)}}
+			</div>
+			<div>
+				{{form_label(registrationForm.plainPassword.first,'Mot de passe', {'label_attr': {'class': 'mb-1 ms-2'}})}}
+				{{form_widget(registrationForm.plainPassword.first, {'attr':{'class': ' px-3 py-2 rounded-3'}})}}
+				{{form_help(registrationForm.plainPassword.first)}}
+				{{form_errors(registrationForm.plainPassword.first)}}
+			</div>
+			<div>
+				{{form_label(registrationForm.plainPassword.second,'Confirmer le mot de passe', {'label_attr': {'class': 'mb-1 ms-2'}})}}
+				{{form_widget(registrationForm.plainPassword.second, {'attr':{'class': ' px-3 py-2 rounded-3'}})}}
+				{{form_help(registrationForm.plainPassword.second)}}
+				{{form_errors(registrationForm.plainPassword.second)}}
+			</div>
+
+			<div>
+				{{form_label(registrationForm.agreeTerms)}}
+				{{form_widget(registrationForm.agreeTerms)}}
+			</div>
+
+			{{ form_rest(registrationForm) }}
+			<button type="submit" class="btn btn-accent col-12 col-md-auto rounded-pill">Inscription</button>
+			{{ form_end(registrationForm) }}
+			<div class="text-center mt-3">
+				<p class='m-0'>Déja un compte ?</p>
+				<a class='text-decoration-none fw-bold' href="{{path('app_login')}}">Connectez-vous !</a>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
