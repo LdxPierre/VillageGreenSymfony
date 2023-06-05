@@ -2,17 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\Address;
+use App\Form\AddressType;
 use App\Repository\UserRepository;
+use App\Repository\AddressRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
+#[Route('/user')]
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
+    #[Route('/', name: 'app_user', methods: ['GET'])]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -23,7 +26,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/personal-information', name: 'app_user_info')]
+    #[Route('/personal-information', name: 'app_user_info', methods: ['GET'])]
     public function informations(): Response
     {
         return $this->render('user/info.html.twig', [
@@ -31,7 +34,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/edit', name: 'app_user_edit')]
+    #[Route('/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, UserRepository $userRepository): Response
     {
         $user = $this->getUser();

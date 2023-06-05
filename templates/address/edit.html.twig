@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+{% block title %}Modifier une adresse
+{% endblock %}
+{% block body %}
+	<div
+		class="container-xxl px-0">
+
+		{# Breadcumbs for large device #}
+		<nav class='d-none d-md-block' aria-label="breadcrumb">
+			<ol class="breadcrumb my-2">
+				<li class="breadcrumb-item">
+					<a class='p-2' href="{{path('app_home')}}">
+						<span class="material-symbols-outlined">
+							home
+						</span>
+					</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a class='text-decoration-none' href="{{path('app_user')}}">Mon compte</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a class='text-decoration-none' href="{{path('app_user_info')}}">Mes informations</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current='page'>
+					Modifier une adresse
+				</li>
+			</ol>
+		</nav>
+
+		{# Heading #}
+		<div class="d-flex align-items-center gap-2 my-2">
+			<a class='d-flex p-2 text-decoration-none' href="{{path('app_user_info')}}">
+				<span class="material-symbols-outlined fs-1">
+					arrow_back
+				</span>
+			</a>
+			<h1 class='m-0'>Modifier une adresse</h1>
+		</div>
+
+		{# form #}
+		{{ include('address/_form.html.twig',{'button_label': 'Modifier'}) }}
+
+	</div>
+{% endblock %}

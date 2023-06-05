@@ -32,14 +32,14 @@
 					arrow_back
 				</span>
 			</a>
-			<h1>Mes informations personnelles</h1>
+			<h1 class='m-0'>Mes informations personnelles</h1>
 		</div>
 
 		<div
 			class="row row-cols-1 row-cols-md-2 g-3 m-0">
 
 			{# coordonnées #}
-			<div class="col">
+			<div class="col mt-0 mt-md-2">
 				<h2>Mes coordonnées</h2>
 
 				<ul class="list-group">
@@ -148,33 +148,41 @@
 				</ul>
 			</div>
 
-			{# adresse #}
-			<div class="col">
+			{# address #}
+			<div class="col mt-2">
 				<h2>Mes adresses</h2>
 				<ul class="list-group">
-					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
-						<span class="material-symbols-outlined">
-							home
-						</span>
-						<div class='flex-fill'>
-							<h6 class='d-block mb-0'>
-								Maison
-							</h6>
-							<small class='d-block'>
-								17 rue du bois, 80640 Thieulloy l'Abbaye, France
-							</small>
-						</div>
-						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
-							<span class="material-symbols-outlined p-2">
-								edit
+					{% for address in user.addresses  %}
+						<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
+							<span class="material-symbols-outlined">
+								home
 							</span>
-						</a>
-					</li>
+							<div class='flex-fill'>
+								<h6 class='d-block mb-0'>
+									{{address.fullname}}
+								</h6>
+								<small class='d-block'>
+									{{address.line}}
+									{{address.street}},
+									{{address.zipcode}}
+									{{address.city}},
+									{{address.country}}
+								</small>
+								<small>tel :
+									{{address.phone}}</small>
+							</div>
+							<a class='d-flex text-decoration-none' href="{{path('app_address_edit', {'id': address.id})}}">
+								<span class="material-symbols-outlined p-2">
+									edit
+								</span>
+							</a>
+						</li>
+					{% endfor %}
 					<li class="list-group-item d-flex align-items-center gap-3 pe-2">
 						<span class="material-symbols-outlined">
 							add
 						</span>
-						<a class='p-2' href="#">Ajouter une nouvelle adresse</a>
+						<a class='p-2' href="{{path('app_address_new')}}">Ajouter une nouvelle adresse</a>
 					</li>
 				</ul>
 			</div>
