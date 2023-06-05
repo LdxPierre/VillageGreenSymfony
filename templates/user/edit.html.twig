@@ -36,7 +36,7 @@
 					arrow_back
 				</span>
 			</a>
-			<h1 class="m-0">Modifier mes informations</h1>
+			<h1 class="m-0 fw-normal">Modifier mes informations</h1>
 		</div>
 
 		{# form #}
@@ -76,7 +76,7 @@
 		</div>
 		{{ form_rest(form) }}
 		<div class='d-flex justify-content-end gap-2'>
-			<a class='link-danger text-decoration-none py-2 px-4' href="{{path('app_user_info')}}">Retour</a>
+			<a class='link-dark text-decoration-none p-2' href="{{path('app_user_info')}}">Retour</a>
 			<input class='btn btn-accent rounded-pill py-2 px-4' type="submit" value='Modifier'>
 		</div>
 		{{form_end(form)}}

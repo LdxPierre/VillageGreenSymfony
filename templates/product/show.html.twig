@@ -6,11 +6,11 @@
 
 {% block body %}
 	<div
-		class="container-xxl">
+		class="container-xxl position-relative px-0">
 
 		{# Breadcrumb #}
 		<nav class='d-none d-md-block' aria-label="breadcrumb">
-			<ol class="breadcrumb my-2">
+			<ol class="breadcrumb my-2 px-2">
 				<li class="breadcrumb-item">
 					<a class='p-2' href="{{path('app_home')}}">
 						<span class="material-symbols-outlined">
@@ -30,19 +30,19 @@
 			</ol>
 		</nav>
 
-		<div class="d-flex gap-3 my-2 mt-md-0 align-items-center">
-			<a class='p-1' href="{{path('app_category_show', {'url': product.category.url})}}">
-				<i class="fa-solid fa-arrow-left fs-2 mt-1"></i>
+		{# heading #}
+		<div class="d-flex align-items-center my-2">
+			<a class='d-flex p-2 text-decoration-none' href="{{path('app_category_show', {'url': product.category.url})}}">
+				<span class="material-symbols-outlined fs-1">
+					arrow_back
+				</span>
 			</a>
-			<h1 class='m-0 fw-light'>
-				{{product.brand}}
-				{{product.name}}
-			</h1>
+			<h1 class='m-0 fw-normal'>{{product.brand}} {{product.name}}</h1>
 		</div>
 
 		{# Product #}
 		<div
-			class="d-flex flex-column flex-md-row gap-4 align-items-center align-items-md-start mt-4">
+			class="d-flex flex-column flex-md-row gap-4 align-items-center align-items-md-start mt-md-3 px-2">
 			{# image #}
 			<div class="col-12 col-md-4">
 				<img class='img-fluid' src="https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/561026/18011037_800.jpg" alt="{{product.name}}">
@@ -53,7 +53,7 @@
 				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis temporibus distinctio eos tempore quo minima atque eius, cum obcaecati possimus consequuntur ex neque aut dignissimos facere! Enim quas maiores neque.</p>
 			</div>
 
-
+			{# cart form medium #}
 			<form class='col-3 d-none d-md-flex flex-column align-items-center border p-3 gap-3' method='POST' action="{{path('app_cart_add_item')}}">
 				<span class='fs-1 fw-bold'>{{product.price}}€</span>
 				<span class="fw-light text-success">Disponible</span>
@@ -69,7 +69,10 @@
 				<input class='col-12 btn btn-accent' type="submit" value="Ajouter au panier">
 			</form>
 
-			<div class="d-flex d-md-none align-items-center justify-content-between p-2 gap-2 bg-primary flex-wrap fixed-bottom">
+		</div>
+		
+			{# cart form small #}
+			<div class="d-flex d-md-none align-items-center justify-content-between p-2 gap-2 bg-primary flex-wrap sticky-bottom">
 				<span class="fs-3 fw-bold text-light">
 					{{product.price}}
 					€
@@ -85,6 +88,5 @@
 					<input class='btn btn-accent' type="submit" value="Ajouter au panier">
 				</form>
 			</div>
-		</div>
 	</div>
 </div>{% endblock %}

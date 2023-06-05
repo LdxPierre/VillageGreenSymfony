@@ -4,8 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-xxl">
-		<nav aria-label="breadcrumb">
+	<div class="container-xxl px-2">
+
+	{# Breadcrumb #}
+		<nav class='d-none d-md-block' aria-label="breadcrumb">
 			<ol class="breadcrumb my-2">
 				<li class="breadcrumb-item">
 					<a class='fw-medium text-decoration-none' href="{{path('app_home')}}">
@@ -18,17 +20,17 @@
 			</ol>
 		</nav>
 
-		<h1 class='mb-3'>Toutes les catégories</h1>
+		<h1 class='my-2'>Toutes les catégories</h1>
 
-		<div class="row row-cols-1 row-cols-md-2 g-3">
+		<div class="row row-cols-1 row-cols-md-2 g-2 mt-md-2">
 			{% for category in categories[:2] %}
 				<div class="col">
-					<div class="d-flex border border-2 border-primary rounded">
+					<div class="d-flex border border-primary rounded shadow">
 						<div class="col-5">
 							<img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="{{category.name}}" class="img-fluid">
 						</div>
 						<div class="col-7 d-flex justify-content-center align-items-center">
-							<a class='text-decoration-none fw-medium fs-5 p-2' href="{{path('app_category_show', {'url': category.url})}}">
+							<a class='text-decoration-none fw-normal fs-5 p-2' href="{{path('app_category_show', {'url': category.url})}}">
 								{{category.name}}
 							</a>
 						</div>
@@ -37,15 +39,15 @@
 			{% endfor %}
 		</div>
 
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-0">
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-2 mt-0">
 			{% for category in categories[2:] %}
 				<div class="col">
-					<div class="d-flex border border-2 border-primary rounded">
+					<div class="d-flex border border-primary rounded shadow">
 						<div class="col-5">
 							<img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="{{category.name}}" class="img-fluid">
 						</div>
 						<div class="col-7 d-flex justify-content-center align-items-center">
-							<a class='text-decoration-none fw-medium fs-5 p-2' href="{{path('app_category_show', {'url': category.url})}}">
+							<a class='text-decoration-none fw-normal fs-5 p-2' href="{{path('app_category_show', {'url': category.url})}}">
 								{{category.name}}
 							</a>
 						</div>
