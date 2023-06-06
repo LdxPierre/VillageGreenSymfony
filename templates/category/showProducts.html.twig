@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-xxl px-0">
+	<div
+		class="container-xxl px-0">
 
 		{# breadcrumb #}
 		<nav class='d-none d-md-block' aria-label="breadcrumb">
@@ -59,7 +60,7 @@
 							<div
 								class="modal-body p-0">
 								{# sort by #}
-								<div class='border-bottom py-2 px-3'>
+								<div class='border-bottom p-3'>
 									<h5>Trier par</h5>
 									<select class='btn btn-outline-primary py-2 col-12' name="sort" id="mSort">
 										<option value="name_ASC" {% if filters is defined and filters.sort == 'name_ASC' %} selected {% endif %}>
@@ -77,7 +78,7 @@
 									</select>
 								</div>
 								<div
-									class='border-bottom py-2 px-3'>
+									class='border-bottom p-3'>
 									{# Brand #}
 									<h5>Marque</h5>
 									<ul class="p-0 m-0">
@@ -90,23 +91,23 @@
 									</ul>
 								</div>
 								<div
-									class='py-2 px-3'>
+									class='p-3'>
 									{# price range #}
 									<h5 class='mb-3'>Echelle de prix</h5>
 									<ul class='p-0'>
 										<li class='d-flex align-items-center gap-2'>
-											<input class='form-control' type="text" name="min" id="min" min='0' max='99999' {% if filters is defined and filters.min is not null %} value='{{filters.min}}' {% endif %}>
+											<input class='form-control text-center px-2' type="text" name="min" id="min" min='0' max='99999' {% if filters is defined and filters.min is not null %} value='{{filters.min}}' {% endif %}>
 											<span>-</span>
-											<input class='form-control' type="text" name="max" id="max" min='1' max='99999' {% if filters is defined and filters.max is not null %} value='{{filters.max}}' {% endif %}>
+											<input class='form-control text-center px-2' type="text" name="max" id="max" min='1' max='99999' {% if filters is defined and filters.max is not null %} value='{{filters.max}}' {% endif %}>
 											<span>€</span>
 										</li>
 									</ul>
 								</div>
 							</div>
-							<div class="modal-footer justify-content-center">
+							<div class="modal-footer align-content-center gap-2">
 								<input type="hidden" name="filter" value='on'>
-								<input type='submit' class="btn btn-primary col-12" value='Valider'>
-								<a class='btn btn-outline-danger col-12 border-0' href="{{path('app_category_show', {'url': category.url})}}">Réinitialiser</a>
+								<a class='link-danger text-decoration-none m-0 p-2' href="{{path('app_category_show', {'url': category.url})}}">Réinitialiser</a>
+								<input type='submit' class="btn btn-primary rounded-pill m-0 px-4" value='Valider'>
 							</div>
 						</div>
 					</div>
@@ -118,7 +119,7 @@
 				<div class="flex-fill d-flex justify-content-between">
 					<form action='{{path('app_category_show', {'url': category.url})}}' class="d-flex gap-2">
 						<div class="dropdown">
-							<button class="dropdown-toggle btn btn-outline-primary" type='button' data-bs-toggle='dropdown' data-bs-auto-close='outside' aria-expanded='false'>
+							<button class="dropdown-toggle btn btn-outline-primary rounded-pill px-3" type='button' data-bs-toggle='dropdown' data-bs-auto-close='outside' aria-expanded='false'>
 								Marque
 							</button>
 							<ul class="dropdown-menu p-2">
@@ -132,20 +133,20 @@
 								</ul>
 							</div>
 							<div class="dropdown">
-								<button class="dropdown-toggle btn btn-outline-primary" type='button' data-bs-toggle='dropdown' data-bs-auto-close='outside' aria-expanded='false'>
+								<button class="dropdown-toggle btn btn-outline-primary rounded-pill px-3" type='button' data-bs-toggle='dropdown' data-bs-auto-close='outside' aria-expanded='false'>
 									Echelle de prix
 								</button>
 								<ul class="dropdown-menu">
 									<li class='p-2 d-flex align-items-center gap-2'>
-										<input class='form-control' type="text" name="min" id="min" min='0' max='99999' {% if filters is defined and filters.min is not null %} value='{{filters.min}}' {% endif %}>
+										<input class='form-control text-center px-2' type="text" name="min" id="min" min='0' max='99999' {% if filters is defined and filters.min is not null %} value='{{filters.min}}' {% endif %}>
 										<span>-</span>
-										<input class='form-control' type="text" name="max" id="max" min='1' max='99999' {% if filters is defined and filters.max is not null %} value='{{filters.max}}' {% endif %}>
+										<input class='form-control text-center px-2' type="text" name="max" id="max" min='1' max='99999' {% if filters is defined and filters.max is not null %} value='{{filters.max}}' {% endif %}>
 										<span>€</span>
 									</li>
 								</ul>
 							</div>
 							<div>
-								<select name="sort" id="sort" class='h-100 btn btn-outline-primary'>
+								<select name="sort" id="sort" class='h-100 btn btn-outline-primary rounded-pill px-3'>
 									<option value="name_ASC" {% if filters is defined and filters.sort == 'name_ASC' %} selected {% endif %}>
 										Trier : Alphabétique A-Z
 									</option>
@@ -161,8 +162,8 @@
 								</select>
 							</div>
 							<input type="hidden" name="filter" value='on'>
-							<input class='btn btn-primary' type="submit" value="Filtrer">
-							<a class='btn btn-outline-danger' href="{{path('app_category_show', {'url': category.url})}}">Réinitialiser</a>
+							<input class='btn btn-primary rounded-pill px-3' type="submit" value="Filtrer">
+							<a class='link-danger text-decoration-none d-flex align-items-center px-2' href="{{path('app_category_show', {'url': category.url})}}">Réinitialiser</a>
 						</form>
 					</div>
 				</div>
@@ -172,13 +173,13 @@
 					<div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 g-2">
 						{% for product in products %}
 							<div class="col">
-								<div class="h-100 border border-primary rounded shadow p-2 d-flex flex-column justify-content-between gap-2">
+								<div class="h-100 border border-primary rounded-4 p-2 d-flex flex-column gap-2 bg-light">
 									<div>
 										<a href="{{path('app_product_show', {'url':product.url})}}">
 											<img src="https://www.terredemusique.com/20273-thickbox_default/guitare-electrique-34-eko-s100-noire.jpg" alt="{{product.brand}} {{product.name}}" class="img-fluid">
 										</a>
 									</div>
-									<div>
+									<div class='flex-fill'>
 										<a class='text-decoration-none' href="{{path('app_product_show', {'url': product.url})}}">{{product.brand}}
 											{{product.name}}</a>
 										<p class='fw-light text-success m-0'>
@@ -186,12 +187,8 @@
 										</p>
 									</div>
 									<p class='m-0 fw-bold fs-5'>{{product.price}}
-										€</p>
-									<form class='m-0' method='POST' action="{{path('app_cart_add_item')}}" name='add_to_cart'>
-										<input type="hidden" name='quantity' value='1'>
-										<input type="hidden" name="id" value='{{product.id}}'>
-										<input class='btn btn-accent col-12' type="submit" value="Ajouter au panier">
-									</form>
+										€
+									</p>
 								</div>
 							</div>
 						{% else %}

@@ -19,11 +19,11 @@
 					</a>
 				</li>
 				<li class="breadcrumb-item">
-					<a class="text-decoration-none" href="{{path('app_category_index')}}">Catégorie</a>
+					<a class="text-decoration-none fw-medium" href="{{path('app_category_index')}}">Catégorie</a>
 				</li>
 				{% for link in breadcrumbLinks %}
 					<li class="breadcrumb-item">
-						<a class='text-decoration-none' href="{{path('app_category_show', {'url': link.url})}}">{{link.name}}</a>
+						<a class='text-decoration-none fw-medium' href="{{path('app_category_show', {'url': link.url})}}">{{link.name}}</a>
 					</li>
 				{% endfor %}
 				<li class="breadcrumb-item active" aria-current='page'>{{product.name}}</li>
@@ -37,56 +37,45 @@
 					arrow_back
 				</span>
 			</a>
-			<h1 class='m-0 fw-normal'>{{product.brand}} {{product.name}}</h1>
+			<h1 class='m-0 fw-normal'>{{product.brand}}
+				{{product.name}}</h1>
 		</div>
 
 		{# Product #}
 		<div
-			class="d-flex flex-column flex-md-row gap-4 align-items-center align-items-md-start mt-md-3 px-2">
+			class="d-flex flex-column flex-md-row gap-4 align-items-center align-items-md-start mt-3 px-2">
 			{# image #}
-			<div class="col-12 col-md-4">
+			<div class="col-12 col-md-4 order-1">
 				<img class='img-fluid' src="https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/561026/18011037_800.jpg" alt="{{product.name}}">
 			</div>
 
 			{# Description #}
-			<div class="flex-fill">
+			<div class="flex-fill order-3 order-md-2">
 				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis temporibus distinctio eos tempore quo minima atque eius, cum obcaecati possimus consequuntur ex neque aut dignissimos facere! Enim quas maiores neque.</p>
 			</div>
 
-			{# cart form medium #}
-			<form class='col-3 d-none d-md-flex flex-column align-items-center border p-3 gap-3' method='POST' action="{{path('app_cart_add_item')}}">
+			{# cart form #}
+			<form class='col-12 col-md-3 d-flex flex-column align-items-md-center border rounded-4 p-3 gap-2 gap-md-3 order-2 order-md-3 bg-light' method='POST' action="{{path('app_cart_add_item')}}">
 				<span class='fs-1 fw-bold'>{{product.price}}€</span>
 				<span class="fw-light text-success">Disponible</span>
 				<div class="col-12 d-flex align-items-center">
 					<label class='form-label pe-3 m-0' for="quantity">Quantité:</label>
-					<select class='form-control' name="quantity">
+					<select class='form-control text-end' name="quantity">
 						{% for i in 1..100 %}
 							<option value="{{i}}">{{i}}</option>
 						{% endfor %}
 					</select>
 				</div>
 				<input type="hidden" name="id" value='{{product.id}}'>
-				<input class='col-12 btn btn-accent' type="submit" value="Ajouter au panier">
+				<input class='col-12 btn btn-accent rounded-pill' type="submit" value="Ajouter au panier">
 			</form>
-
 		</div>
-		
-			{# cart form small #}
-			<div class="d-flex d-md-none align-items-center justify-content-between p-2 gap-2 bg-primary flex-wrap sticky-bottom">
-				<span class="fs-3 fw-bold text-light">
-					{{product.price}}
-					€
-				</span>
-				<form action="{{path('app_cart_add_item')}}" method="POST" class="d-flex align-items-center gap-2">
-					<label class='text-light' for="quantity">Quantité</label>
-					<select class='form-control' name="quantity" id="quantity_sm">
-						{% for i in 1..100 %}
-							<option value="{{i}}">{{i}}</option>
-						{% endfor %}
-					</select>
-					<input type="hidden" name="id" value='{{product.id}}'>
-					<input class='btn btn-accent' type="submit" value="Ajouter au panier">
-				</form>
-			</div>
+
+		{# botbar cart form small device #}
+		<form action="{{path('app_cart_add_item')}}" method="POST" class='d-flex d-md-none p-2 bg-primary sticky-bottom'>
+			<input type="hidden" name="id" value='{{product.id}}'>
+			<input type="hidden" name="quantity" value='1'>
+			<input class='btn btn-accent col-12 rounded-pill' type="submit" value="Ajouter au panier">
+		</form>
 	</div>
 </div>{% endblock %}

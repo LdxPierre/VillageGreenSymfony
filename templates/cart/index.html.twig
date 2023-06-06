@@ -23,44 +23,48 @@
 
 		<h1 class='my-2 fw-normal'>Votre Panier</h1>
 
-		<div class="row gx-5">
+		<div class="row gx-4">
 			<div class="col-md-8 order-1">
-				<div class="d-flex flex-column">
+				<div class="d-flex flex-column gap-2">
 					{% if cart is empty %}
-						<h2>Vous avez aucun produit dans le panier</h2>
+						<h2 class='fw-normal'>Vous avez aucun produit dans votre panier</h2>
 					{% else %}
 						{% for item in cart %}
-							<div class="border-bottom border-dark py-2 d-flex">
-								<div class="col-2">
+							<div class="d-flex gap-2 border border-primary rounded-4 p-2 bg-light">
+								<div class="col-4 col-md-2 d-flex align-items-center">
 									<a href="{{path('app_product_show', {'url': item.product.url})}}">
 										<img class='img-fluid' src="https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/561026/18011037_800.jpg" alt="">
 									</a>
 								</div>
-								<div class="flex-fill px-2">
-									<a href={{path('app_product_show', {'url': item.product.url} )}} class='m-0 fs-5 text-decoration-none'>{{item.product.name}}</a>
-									<p class='m-0 fw-light'>Quantité :
-										{{item.quantity}}</p>
-									<p class='m-0 fw-light text-success'>Disponible</p>
-								</div>
-								<div class="d-flex flex-column align-items-end justify-content-between">
-									<p class='m-0 fw-bold fs-5'>{{item.product.price * item.quantity}}
-										€</p>
-									<form method="post" action="{{ path('app_cart_item_delete', {'id': item.id}) }}">
-										<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
-										<button class="btn text-danger border-0">Supprimer</button>
-									</form>
+								<div class="col d-flex flex-column justify-content-between">
+									<div>
+										<a href={{path('app_product_show', {'url': item.product.url} )}} class='m-0 fs-5 text-decoration-none'>{{item.product.name}}</a>
+										<p class='m-0 fw-light'>Quantité :
+											{{item.quantity}}</p>
+										<p class='m-0 fw-light text-success'>Disponible</p>
+									</div>
+									<div class="d-flex justify-content-between align-items-center">
+										<p class='m-0 fw-bold fs-5'>{{item.product.price * item.quantity}}
+											€
+										</p>
+										<form method="post" action="{{ path('app_cart_item_delete', {'id': item.id}) }}" class='text-end'>
+											<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+											<button class="btn text-danger border-0 p-2 pb-0" type='submit'>Supprimer</button>
+										</form>
+									</div>
 								</div>
 							</div>
 						{% endfor %}
 					{% endif %}
 				</div>
 			</div>
+
 			<div class="col-md-4 order-0 order-md-1 mb-3 m-md-0">
-				<div class='border border-dark rounded d-flex flex-column overflow-hidden'>
+				<div class='border border-primary rounded-4 d-flex flex-column overflow-hidden'>
 					<div class="bg-primary text-light text-center d-flex justify-content-center align-items-center p-3">
 						<h5 class='m-0'>Votre commande</h5>
 					</div>
-					<div class="px-3 pb-3">
+					<div class="px-3 pb-3 bg-light">
 						<ul class='m-0 list-unstyled'>
 							{% for item in cart %}
 								<li class='fw-light border-bottom py-2'>
@@ -76,13 +80,14 @@
 								<span class='fs-5 fw-bold'>{{total}}
 									€</span>
 							</div>
-							<button class='btn btn-accent w-100'>Valider la commande</button>
+							<button class='btn btn-accent col-12 rounded-pill'>Valider la commande</button>
 						{% else %}
-							<button class='btn btn-secondary w-100 disabled mt-3'>Valider la commande</button>
+							<button class='btn btn-secondary col-12 rounded-pill disabled mt-3'>Valider la commande</button>
 						{% endif %}
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 

@@ -79,12 +79,19 @@
 										</span>
 										{{app.user.email}}
 									</a>
-									<ul class="dropdown-menu dropdown-menu-end">
+									<ul class="dropdown-menu dropdown-menu-end text-end">
 										<li class="dropdown-item">
-											<a href="{{path('app_user')}}" class="text-decoration-none">Votre profil</a>
+											<a href="#" class="text-decoration-none d-block py-1">Vos commandes</a>
 										</li>
 										<li class="dropdown-item">
-											<a href="{{path('app_logout')}}" class="text-decoration-none">Déconnexion</a>
+											<a href="{{path('app_user_info')}}" class="text-decoration-none d-block py-1">Vos informations</a>
+										</li>
+										<li class="dropdown-item">
+											<a href="{{path('app_user')}}" class="text-decoration-none d-block py-1">Votre compte</a>
+										</li>
+										<li><hr class="dropdown-divider"></li>
+										<li class="dropdown-item">
+											<a href="{{path('app_logout')}}" class="text-decoration-none d-block py-1">Déconnexion</a>
 										</li>
 									</ul>
 								</div>

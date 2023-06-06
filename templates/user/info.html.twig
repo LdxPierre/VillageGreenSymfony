@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	VillageGreen - Mes informations personnelles
+	VillageGreen - Vos informations personnelles
 {% endblock %}
 
 {% block body %}
@@ -19,9 +19,9 @@
 					</a>
 				</li>
 				<li class="breadcrumb-item">
-					<a class='text-decoration-none' href="{{path('app_user')}}">Mon compte</a>
+					<a class='text-decoration-none fw-medium' href="{{path('app_user')}}">Votre compte</a>
 				</li>
-				<li class="breadcrumb-item active" aria-current='page'>Mes informations personnelles</li>
+				<li class="breadcrumb-item active" aria-current='page'>Vos informations personnelles</li>
 			</ol>
 		</nav>
 
@@ -32,7 +32,7 @@
 					arrow_back
 				</span>
 			</a>
-			<h1 class='m-0 fw-normal'>Mes informations personnelles</h1>
+			<h1 class='m-0 fw-normal'>Vos informations personnelles</h1>
 		</div>
 
 		<div
@@ -40,11 +40,11 @@
 
 			{# coordonnées #}
 			<div class="col mt-0 mt-md-2">
-				<h2 class='fw-normal'>Mes coordonnées</h2>
+				<h2 class='fw-normal'>Vos coordonnées</h2>
 
 				<ul class="list-group">
 					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
-						<span class="material-symbols-outlined">
+						<span class="material-symbols-outlined  text-primary">
 							alternate_email
 						</span>
 						<div class='flex-fill'>
@@ -62,7 +62,7 @@
 						</a>
 					</li>
 					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
-						<span class="material-symbols-outlined">
+						<span class="material-symbols-outlined text-primary">
 							password
 						</span>
 						<div class='flex-fill'>
@@ -74,13 +74,13 @@
 							</small>
 						</div>
 						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
-							<span class='material-symbols-outlined p-2'>
+							<span class='material-symbols-outlined text-primary p-2'>
 								edit
 							</span>
 						</a>
 					</li>
 					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
-						<span class="material-symbols-outlined">
+						<span class="material-symbols-outlined text-primary">
 							account_circle
 						</span>
 						<div class='flex-fill'>
@@ -96,13 +96,13 @@
 							</small>
 						</div>
 						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
-							<span class='material-symbols-outlined p-2'>
+							<span class='material-symbols-outlined text-primary p-2'>
 								edit
 							</span>
 						</a>
 					</li>
 					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
-						<span class="material-symbols-outlined">
+						<span class="material-symbols-outlined text-primary">
 							account_circle
 						</span>
 						<div class='flex-fill'>
@@ -118,13 +118,13 @@
 							</small>
 						</div>
 						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
-							<span class='material-symbols-outlined p-2'>
+							<span class='material-symbols-outlined text-primary p-2'>
 								edit
 							</span>
 						</a>
 					</li>
 					<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
-						<span class="material-symbols-outlined">
+						<span class="material-symbols-outlined text-primary">
 							call
 						</span>
 						<div class='flex-fill'>
@@ -140,7 +140,7 @@
 							</small>
 						</div>
 						<a class='d-flex text-decoration-none' href="{{path('app_user_edit')}}">
-							<span class='material-symbols-outlined p-2'>
+							<span class='material-symbols-outlined text-primary p-2'>
 								edit
 							</span>
 						</a>
@@ -149,12 +149,12 @@
 			</div>
 
 			{# address #}
-			<div class="col mt-2">
-				<h2 class='fw-normal'>Mes adresses</h2>
+			<div class="col mt-3 mt-md-2">
+				<h2 class='fw-normal'>Vos adresses</h2>
 				<ul class="list-group">
 					{% for address in user.addresses  %}
 						<li class="list-group-item d-flex align-items-center justify-content-between gap-3 pe-2">
-							<span class="material-symbols-outlined">
+							<span class="material-symbols-outlined text-primary">
 								home
 							</span>
 							<div class='flex-fill'>
@@ -172,14 +172,14 @@
 									{{address.phone}}</small>
 							</div>
 							<a class='d-flex text-decoration-none' href="{{path('app_address_edit', {'id': address.id})}}">
-								<span class="material-symbols-outlined p-2">
+								<span class="material-symbols-outlined text-primary p-2">
 									edit
 								</span>
 							</a>
 						</li>
 					{% endfor %}
 					<li class="list-group-item d-flex align-items-center gap-3 pe-2">
-						<span class="material-symbols-outlined">
+						<span class="material-symbols-outlined text-primary">
 							add
 						</span>
 						<a class='p-2' href="{{path('app_address_new')}}">Ajouter une nouvelle adresse</a>
