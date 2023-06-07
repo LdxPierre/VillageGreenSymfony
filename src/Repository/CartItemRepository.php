@@ -6,6 +6,7 @@ use App\Entity\CartItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @extends ServiceEntityRepository<CartItem>
  *
@@ -40,11 +41,45 @@ class CartItemRepository extends ServiceEntityRepository
     }
 
     /**
-     * return CartItem[] with user = param1 or visitorId = param2
+     * return fusion cart item if User and VisitorId exists.
+     * else cartItem[] if User exists
+     * else return cartItem[] of visitorId
      */
     public function getItems($user, $visitorId = null): array
     {
-        if ($user != null) {
+        if (isset($user) && isset($visitorId)) {
+            // User cart
+            $userCart = $this->findBy(['user' => $user]);
+            // Visitor cart
+            $visitorCart = $this->findBy(['visitorId' => $visitorId]);
+
+            // for all items in visitor cart
+            foreach ($visitorCart as $vItem) {
+                $found = false;
+                // if present in user cart
+                foreach ($userCart as $uItem) {
+                    // Add quantity
+                    if ($vItem->getProduct() == $uItem->getProduct()) {
+                        $found = true;
+                        $newQuantity = $uItem->getQuantity() + $vItem->getQuantity();
+                        $uItem->setQuantity($newQuantity);
+                        $this->getEntityManager()->persist($uItem);
+                        $this->getEntityManager()->remove($vItem);
+                    }
+                }
+                // add User id and remove Visitor Id if not found
+                if (!$found) {
+                    $vItem->setVisitorId(null);
+                    $vItem->setUser($user);
+                    $this->getEntityManager()->persist($vItem);
+                }
+            }
+
+            // flush changes
+            $this->getEntityManager()->flush();
+
+            return $userCart;
+        } elseif (isset($user)) {
             return $this->findBy(['user' => $user]);
         } else {
             return $this->findBy(['visitorId' => $visitorId]);
