@@ -18,13 +18,13 @@ class BaseController extends AbstractController
         $cartCount = 0;
 
         if ($session->get('cart') == null) {
-            $cartItemRepository->getItems($user, $visitorId);
+            $cart = $cartItemRepository->getItems($user, $visitorId);
         } else {
             $cart = $session->get('cart');
         }
 
         foreach ($cart as $item) {
-            $cartCount = $cartCount + $item->getQuantity();
+            $cartCount += $item->getQuantity();
         }
 
         $categories = $categoryRepository->findMainCategories();
