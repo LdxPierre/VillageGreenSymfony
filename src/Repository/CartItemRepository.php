@@ -42,7 +42,7 @@ class CartItemRepository extends ServiceEntityRepository
     /**
      * return CartItem[] with user = param1 or visitorId = param2
      */
-    public function getItems($user, $visitorId): array
+    public function getItems($user, $visitorId = null): array
     {
         if ($user != null) {
             return $this->findBy(['user' => $user]);
