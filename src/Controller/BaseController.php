@@ -17,12 +17,16 @@ class BaseController extends AbstractController
         $cart = [];
         $cartCount = 0;
 
-        if ($session->get('cart') == null) {
-            $cart = $cartItemRepository->getItems($user, $visitorId);
-        } else {
+        if ($session->get('cart') != null) {
+            // get cart from session if exists
             $cart = $session->get('cart');
+        } else {
+            // get cart from database
+            $cart = $cartItemRepository->getItems($user, $visitorId);
+            $session->set('cart', $cart);
         }
 
+        // total items in cart
         foreach ($cart as $item) {
             $cartCount += $item->getQuantity();
         }

@@ -41,9 +41,7 @@ class CartItemRepository extends ServiceEntityRepository
     }
 
     /**
-     * return fusion cart item if User and VisitorId exists.
-     * else cartItem[] if User exists
-     * else return cartItem[] of visitorId
+     * Return fusion cartItem if User and VisitorId exists, else User, else VisitorId.
      */
     public function getItems($user, $visitorId = null): array
     {
