@@ -57,7 +57,17 @@
 			{# cart form #}
 			<form class='col-12 col-md-3 d-flex flex-column align-items-md-center border rounded-4 p-3 gap-2 gap-md-3 order-2 order-md-3 bg-light' method='POST' action="{{path('app_cart_add_item')}}">
 				<span class='fs-1 fw-bold'>{{product.price}}€</span>
-				<span class="fw-light text-success">Disponible</span>
+				{% if product.stock > 20 %}
+					<span class='text-success m-0'>En stock</span>
+				{% elseif product.stock < 20 and product.stock > 0 %}
+					<span class='text-warning m-0'>Plus que
+						{{product.stock}}
+						en stock</span>
+				{% elseif product.stock == 0 %}
+					<span class="text-danger m-0">
+						Hors stock
+					</span>
+				{% endif %}
 				<div class="col-12 d-flex align-items-center">
 					<label class='form-label pe-3 m-0' for="quantity">Quantité:</label>
 					<select class='form-control text-end' name="quantity">

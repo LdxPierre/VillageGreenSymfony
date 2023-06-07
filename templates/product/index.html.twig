@@ -180,11 +180,19 @@
 										</a>
 									</div>
 									<div class='flex-fill'>
-										<a class='text-decoration-none' href="{{path('app_product_show', {'url': product.url})}}">{{product.brand}}
+										<a class='text-decoration-none d-block' href="{{path('app_product_show', {'url': product.url})}}">{{product.brand}}
 											{{product.name}}</a>
-										<p class='fw-light text-success m-0'>
-											<small>En stock</small>
-										</p>
+										{% if product.stock > 20 %}
+											<small class='text-success m-0'>En stock</small>
+										{% elseif product.stock < 20 and product.stock > 0 %}
+											<small class='text-warning m-0'>Plus que
+												{{product.stock}}
+												en stock</small>
+										{% elseif product.stock == 0 %}
+											<small class="text-danger m-0">
+												Hors stock
+											</small>
+										{% endif %}
 									</div>
 									<p class='m-0 fw-bold fs-5'>{{product.price}}
 										€

@@ -30,6 +30,15 @@
 						<h2 class='fw-normal'>Vous avez aucun produit dans votre panier</h2>
 					{% else %}
 						{% for item in cart %}
+							{% if item.product.stock == 0 %}
+								<div class="p-2 border border-danger rounded-4 bg-danger-subtle text-center">
+									<p class='mb-1 text-danger'>Un ou plusieurs produits du panier est actuellement pas en stock. Celui-ci vous sera envoyé dès son retour en stock.
+									</p>
+									<p class='text-danger m-0'>La facturation des produits est réalisée lors de l'éxpédition.</p>
+								</div>
+							{% endif %}
+						{% endfor %}
+						{% for item in cart %}
 							<div class="d-flex gap-2 border border-primary rounded-4 p-2 bg-light">
 								<div class="col-4 col-md-2 d-flex align-items-center">
 									<a href="{{path('app_product_show', {'url': item.product.url})}}">
@@ -41,7 +50,17 @@
 										<a href={{path('app_product_show', {'url': item.product.url} )}} class='m-0 fs-5 text-decoration-none'>{{item.product.name}}</a>
 										<p class='m-0 fw-light'>Quantité :
 											{{item.quantity}}</p>
-										<p class='m-0 fw-light text-success'>Disponible</p>
+										{% if item.product.stock > 20 %}
+											<small class='text-success m-0'>En stock</small>
+										{% elseif item.product.stock < 20 and item.product.stock > 0 %}
+											<small class='text-warning m-0'>Plus que
+												{{item.product.stock}}
+												en stock</small>
+										{% elseif item.product.stock == 0 %}
+											<small class="text-danger m-0">
+												Hors stock
+											</small>
+										{% endif %}
 									</div>
 									<div class="d-flex justify-content-between align-items-center">
 										<p class='m-0 fw-bold fs-5'>{{item.product.price * item.quantity}}
