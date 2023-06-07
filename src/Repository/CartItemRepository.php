@@ -70,6 +70,7 @@ class CartItemRepository extends ServiceEntityRepository
                     $vItem->setVisitorId(null);
                     $vItem->setUser($user);
                     $this->getEntityManager()->persist($vItem);
+                    $userCart[] = $vItem;
                 }
             }
 
