@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\CartItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @extends ServiceEntityRepository<CartItem>
@@ -41,14 +40,14 @@ class CartItemRepository extends ServiceEntityRepository
     }
 
     /**
-     * return CartItem[] with user = param1 or session = param2
+     * return CartItem[] with user = param1 or visitorId = param2
      */
-    public function getItems($user, Session $session): array
+    public function getItems($user, $visitorId): array
     {
         if ($user != null) {
             return $this->findBy(['user' => $user]);
         } else {
-            return $this->findBy(['sessionId' => $session->getId()]);
+            return $this->findBy(['sessionId' => $visitorId]);
         }
     }
 

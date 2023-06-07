@@ -13,11 +13,12 @@ class BaseController extends AbstractController
     {
         $user = $this->getUser();
         $session = $request->getSession();
+        $visitorId = $request->cookies->get('VISID');
         $cart = [];
         $cartCount = 0;
 
         if ($session->get('cart') == null) {
-            $cartItemRepository->getItems($user, $session);
+            $cartItemRepository->getItems($user, $visitorId);
         } else {
             $cart = $session->get('cart');
         }
