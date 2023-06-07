@@ -83,7 +83,7 @@ class CategoryController extends AbstractController
 
         // render all products
         $products = $category->getProducts();
-        return $this->render('category/showProducts.html.twig', [
+        return $this->render('product/index.html.twig', [
             'category' => $category,
             'products' => $products,
             'brands' => $productRepository->fetchUniqueBrands($category->getId()),

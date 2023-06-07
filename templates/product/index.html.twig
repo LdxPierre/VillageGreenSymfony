@@ -1,37 +1,205 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product index{% endblock %}
+{% block title %}
+	{{category.name}}
+{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
+	<div
+		class="container-xxl px-0">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Url</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.url }}</td>
-                <td>
-                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		{# breadcrumb #}
+		<nav class='d-none d-md-block' aria-label="breadcrumb">
+			<ol class="breadcrumb my-2 px-2">
+				<li class="breadcrumb-item">
+					<a class='fw-medium text-decoration-none' href="{{path('app_home')}}">
+						<span class="material-symbols-outlined">
+							home
+						</span>
+					</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a class="fw-medium text-decoration-none" href="{{path('app_category_index')}}">Catégorie</a>
+				</li>
+				{% for link in breadcrumbLinks %}
+					<li class="breadcrumb-item">
+						<a class='text-decoration-none fw-medium' href="{{path('app_category_show', {'url': link.url})}}">{{link.name}}</a>
+					</li>
+				{% endfor %}
+				<li class="breadcrumb-item active" aria-current='page'>{{category.name}}</li>
+			</ol>
+		</nav>
 
-    <a href="{{ path('app_product_new') }}">Create new</a>
-{% endblock %}
+		{# heading #}
+		<div class="d-flex align-items-center my-2">
+			<a class='d-flex p-2 text-decoration-none' href="{{path('app_category_show', {'url': category.parent.url})}}">
+				<span class="material-symbols-outlined fs-1">
+					arrow_back
+				</span>
+			</a>
+			<h1 class='m-0'>{{category.name}}</h1>
+		</div>
+
+		<div
+			class="d-flex flex-column gap-3 px-2 pt-md-2">
+
+			{# small device filters #}
+			<div class='d-md-none'>
+				<div>
+					<button class="btn btn-outline-primary col-12" type='button' data-bs-toggle='modal' data-bs-target='#modalForm'>Filtres</button>
+				</div>
+
+				{# modalForm #}
+				<form action='{{path('app_category_show', {'url': category.url})}}' class="modal fade" id="modalForm" tabindex='-1' aria-labelledby='modalFormLabel' aria-hidden='true'>
+					<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="modalFormLabel">Filtres</h4>
+								<button class="btn-close" type='button' data-bs-dismiss='modal' aria-label='Close'></button>
+							</div>
+							<div
+								class="modal-body p-0">
+								{# sort by #}
+								<div class='border-bottom p-3'>
+									<h5>Trier par</h5>
+									<select class='btn btn-outline-primary py-2 col-12' name="sort" id="mSort">
+										<option value="name_ASC" {% if filters is defined and filters.sort == 'name_ASC' %} selected {% endif %}>
+											Trier : Alphabétique A-Z
+										</option>
+										<option value="name_DESC" {% if filters is defined and filters.sort == 'name_DESC' %} selected {% endif %}>
+											Trier : Alphabétique Z-A
+										</option>
+										<option value="price_ASC" {% if filters is defined and filters.sort == 'price_ASC' %} selected {% endif %}>
+											Trier : Du - cher au + cher
+										</option>
+										<option value="price_DESC" {% if filters is defined and filters.sort == 'price_DESC' %} selected {% endif %}>
+											Trier : Du + cher au - cher
+										</option>
+									</select>
+								</div>
+								<div
+									class='border-bottom p-3'>
+									{# Brand #}
+									<h5>Marque</h5>
+									<ul class="p-0 m-0">
+										{% for brand in brands %}
+											<li class='form-check d-flex align-items-center gap-2 p-0 m-0'>
+												<input class='form-check-input m-0' type="checkbox" name="brand_{{brand}}" id="sm_brand_{{brand}}" value='{{brand}}' {% if filters is defined and brand in filters.brands %} checked {% endif %}>
+												<label class='form-check-label flex-fill py-2' for="sm_brand_{{brand}}">{{brand}}</label>
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+								<div
+									class='p-3'>
+									{# price range #}
+									<h5 class='mb-3'>Echelle de prix</h5>
+									<ul class='p-0'>
+										<li class='d-flex align-items-center gap-2'>
+											<input class='form-control text-center px-2' type="text" name="min" id="min" min='0' max='99999' {% if filters is defined and filters.min is not null %} value='{{filters.min}}' {% endif %}>
+											<span>-</span>
+											<input class='form-control text-center px-2' type="text" name="max" id="max" min='1' max='99999' {% if filters is defined and filters.max is not null %} value='{{filters.max}}' {% endif %}>
+											<span>€</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="modal-footer align-content-center gap-2">
+								<input type="hidden" name="filter" value='on'>
+								<a class='link-danger text-decoration-none m-0 p-2' href="{{path('app_category_show', {'url': category.url})}}">Réinitialiser</a>
+								<input type='submit' class="btn btn-primary rounded-pill m-0 px-4" value='Valider'>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			{# medium device filters #}
+			<div class="d-none d-md-flex align-items-center gap-5">
+				<div class="flex-fill d-flex justify-content-between">
+					<form action='{{path('app_category_show', {'url': category.url})}}' class="d-flex gap-2">
+						<div class="dropdown">
+							<button class="dropdown-toggle btn btn-outline-primary rounded-pill px-3" type='button' data-bs-toggle='dropdown' data-bs-auto-close='outside' aria-expanded='false'>
+								Marque
+							</button>
+							<ul class="dropdown-menu p-2">
+								{% for brand in brands %}
+									<li class='form-check d-flex align-items-center gap-2 p-0 m-0'>
+										<input class='form-check-input m-0' type="checkbox" name="brand_{{brand}}" id="brand_{{brand}}" value='{{brand}}' {% if filters is defined and brand in filters.brands %} checked {% endif %}>
+										<label class='form-check-label flex-fill py-2' for="brand_{{brand}}">{{brand}}</label</li>
+									{% else %}
+										<li>Aucune marque trouvée :'(</li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="dropdown">
+								<button class="dropdown-toggle btn btn-outline-primary rounded-pill px-3" type='button' data-bs-toggle='dropdown' data-bs-auto-close='outside' aria-expanded='false'>
+									Echelle de prix
+								</button>
+								<ul class="dropdown-menu">
+									<li class='p-2 d-flex align-items-center gap-2'>
+										<input class='form-control text-center px-2' type="text" name="min" id="min" min='0' max='99999' {% if filters is defined and filters.min is not null %} value='{{filters.min}}' {% endif %}>
+										<span>-</span>
+										<input class='form-control text-center px-2' type="text" name="max" id="max" min='1' max='99999' {% if filters is defined and filters.max is not null %} value='{{filters.max}}' {% endif %}>
+										<span>€</span>
+									</li>
+								</ul>
+							</div>
+							<div>
+								<select name="sort" id="sort" class='h-100 btn btn-outline-primary rounded-pill px-3'>
+									<option value="name_ASC" {% if filters is defined and filters.sort == 'name_ASC' %} selected {% endif %}>
+										Trier : Alphabétique A-Z
+									</option>
+									<option value="name_DESC" {% if filters is defined and filters.sort == 'name_DESC' %} selected {% endif %}>
+										Trier : Alphabétique Z-A
+									</option>
+									<option value="price_ASC" {% if filters is defined and filters.sort == 'price_ASC' %} selected {% endif %}>
+										Trier : Du - cher au + cher
+									</option>
+									<option value="price_DESC" {% if filters is defined and filters.sort == 'price_DESC' %} selected {% endif %}>
+										Trier : Du + cher au - cher
+									</option>
+								</select>
+							</div>
+							<input type="hidden" name="filter" value='on'>
+							<input class='btn btn-primary rounded-pill px-3' type="submit" value="Filtrer">
+							<a class='link-danger text-decoration-none d-flex align-items-center px-2' href="{{path('app_category_show', {'url': category.url})}}">Réinitialiser</a>
+						</form>
+					</div>
+				</div>
+
+				{# products list #}
+				{% if products %}
+					<div class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 g-2">
+						{% for product in products %}
+							<div class="col">
+								<div class="h-100 border border-primary rounded-4 p-2 d-flex flex-column gap-2 bg-light">
+									<div>
+										<a href="{{path('app_product_show', {'url':product.url})}}">
+											<img src="https://www.terredemusique.com/20273-thickbox_default/guitare-electrique-34-eko-s100-noire.jpg" alt="{{product.brand}} {{product.name}}" class="img-fluid">
+										</a>
+									</div>
+									<div class='flex-fill'>
+										<a class='text-decoration-none' href="{{path('app_product_show', {'url': product.url})}}">{{product.brand}}
+											{{product.name}}</a>
+										<p class='fw-light text-success m-0'>
+											<small>En stock</small>
+										</p>
+									</div>
+									<p class='m-0 fw-bold fs-5'>{{product.price}}
+										€
+									</p>
+								</div>
+							</div>
+						{% else %}
+							<h2>Aucun produit dans cette catégorie</h2>
+						{% endfor %}
+					</div>
+				{% else %}
+					<div class="col-12">
+						<h2>Aucun produit n'a été trouvé :'(</h2>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	{% endblock %}
