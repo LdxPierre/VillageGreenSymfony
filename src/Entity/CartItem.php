@@ -21,7 +21,7 @@ class CartItem
     private ?int $quantity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $sessionId = null;
+    private ?string $visitorId = null;
 
     #[ORM\ManyToOne(inversedBy: 'cartItems')]
     private ?User $user = null;
@@ -55,14 +55,14 @@ class CartItem
         return $this;
     }
 
-    public function getSessionId(): ?string
+    public function getVisitorId(): ?string
     {
-        return $this->sessionId;
+        return $this->visitorId;
     }
 
-    public function setSessionId(?string $sessionId): self
+    public function setVisitorId(?string $visitorId): self
     {
-        $this->sessionId = $sessionId;
+        $this->visitorId = $visitorId;
 
         return $this;
     }

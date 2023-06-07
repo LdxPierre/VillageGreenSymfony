@@ -77,15 +77,15 @@ class CartController extends AbstractController
             }
             $cart = $cartItemRepository->findBy(['user' => $user]);
         } else {
-            $oldItem = $cartItemRepository->findOneBy(['product' => $product, 'sessionId' => $visitorId]);
+            $oldItem = $cartItemRepository->findOneBy(['product' => $product, 'visitorId' => $visitorId]);
             if ($oldItem) {
                 $oldItem->setQuantity($oldItem->getQuantity() + $item->getQuantity());
                 $cartItemRepository->save($oldItem, true);
             } else {
-                $item->setSessionId($visitorId);
+                $item->setVisitorId($visitorId);
                 $cartItemRepository->save($item, true);
             }
-            $cart = $cartItemRepository->findBy(['sessionId' => $visitorId]);
+            $cart = $cartItemRepository->findBy(['visitorId' => $visitorId]);
         }
 
         // update cart in $_SESSION

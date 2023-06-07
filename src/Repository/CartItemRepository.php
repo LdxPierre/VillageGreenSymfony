@@ -47,7 +47,7 @@ class CartItemRepository extends ServiceEntityRepository
         if ($user != null) {
             return $this->findBy(['user' => $user]);
         } else {
-            return $this->findBy(['sessionId' => $visitorId]);
+            return $this->findBy(['visitorId' => $visitorId]);
         }
     }
 
