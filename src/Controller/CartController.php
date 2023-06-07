@@ -52,7 +52,7 @@ class CartController extends AbstractController
         $user = $this->getUser();
         // VisitorId
         $visitorId = $request->cookies->get('VISID');
-        if ($visitorId == null) {
+        if ($visitorId == null && $user == null) {
             $visitorId = uniqid();
             $cookie = new Cookie('VISID', $visitorId, strtotime('+1 year'));
             $response->headers->setCookie($cookie);
@@ -60,7 +60,7 @@ class CartController extends AbstractController
         // Product
         $product = $productRepository->findOneBy(['id' => $request->get('id')]);
 
-        // New car item
+        // New cartItem
         $item = new CartItem();
         $item->setProduct($product);
         $item->setQuantity($request->get('quantity'));
