@@ -26,21 +26,10 @@
 		home
 	</span>
 	<div class="form-floating flex-fill">
-		{{form_widget(form.line, {'attr': {'placeholder':'Numéro de voie', 'class': 'border-primary'}})}}
-		{{form_label(form.line, 'Numéro de voie')}}
-		{{form_help(form.line)}}
-		{{form_errors(form.line)}}
-	</div>
-</div>
-<div class='d-flex align-items-center gap-3'>
-	<span class="material-symbols-outlined text-primary ms-2">
-		home
-	</span>
-	<div class="form-floating flex-fill">
-		{{form_widget(form.street, {'attr': {'placeholder':'Nom de rue', 'class': 'border-primary'}})}}
-		{{form_label(form.street, 'Nom de rue')}}
-		{{form_help(form.street)}}
-		{{form_errors(form.street)}}
+		{{form_widget(form.address, {'attr': {'placeholder':'Adresse 1', 'class': 'border-primary'}})}}
+		{{form_label(form.address, 'Adresse 1')}}
+		{{form_help(form.address)}}
+		{{form_errors(form.address)}}
 	</div>
 </div>
 <div class='d-flex align-items-center gap-3'>

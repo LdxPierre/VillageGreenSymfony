@@ -43,18 +43,6 @@ class Address
     #[ORM\Column(length: 20)]
     private ?string $phone = null;
 
-    #[Assert\NotBlank(message: 'Veuillez saisir un numéro de voie')]
-    #[Assert\Length(
-        max: 10,
-        maxMessage: 'Le numéro de voie ne peut pas dépasser 10 caractères'
-    )]
-    #[Assert\Regex(
-        pattern: '/^[\d]{1,4}(?:[ ]{1}[a-zA-Z]{1,5})?$/',
-        message: 'Veuillez saisir un numéro de voie valide',
-    )]
-    #[ORM\Column(length: 10)]
-    private ?string $line = null;
-
     #[Assert\NotBlank(message: 'Veuillez saisir un nom de rue')]
     #[Assert\Length(
         min: 5,
@@ -63,11 +51,11 @@ class Address
         maxMessage: 'Le nom de rue ne doit pas dépasser 100 caractères',
     )]
     #[Assert\Regex(
-        pattern: '/^[a-zéèçàâẑêŷûîôŝĝĥĵŵĉäëÿüïöḧẅẍùA-Z]{1,50}(?:(?:, |,|[- ])[a-zéèçàâẑêŷûîôŝĝĥĵŵĉäëÿüïöḧẅẍùA-Z]+)*$/',
-        message: 'Veuillez saisir un nom de rue valide'
+        pattern: '/^[0-9a-zéèçàâẑêŷûîôŝĝĥĵŵĉäëÿüïöḧẅẍùA-Z]{1,50}(?:(?:, |,|[- ])[a-zéèçàâẑêŷûîôŝĝĥĵŵĉäëÿüïöḧẅẍùA-Z]+)*$/',
+        message: 'Veuillez saisir une adresse valide'
     )]
     #[ORM\Column(length: 50)]
-    private ?string $street = null;
+    private ?string $address = null;
 
     #[Assert\NotBlank(message: 'Veuillez saisir un code postal')]
     #[Assert\Length(
@@ -151,28 +139,16 @@ class Address
         return $this;
     }
 
-    public function getLine(): ?string
+    public function setAddress(string $address): self
     {
-        return $this->line;
-    }
-
-    public function setLine(string $line): self
-    {
-        $this->line = $line;
+        $this->address = $address;
 
         return $this;
     }
 
-    public function getStreet(): ?string
+    public function getAddress(): ?string
     {
-        return $this->street;
-    }
-
-    public function setStreet(string $street): self
-    {
-        $this->street = $street;
-
-        return $this;
+        return $this->address;
     }
 
     public function getZipcode(): ?string
@@ -233,5 +209,11 @@ class Address
         $this->country = $country;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        $string = $this->getFullname() . ', ' . $this->getAddress() . ', ' . $this->getZipcode() . ' ' . $this->getCity() . ', ' . $this->getCountry();
+        return $string;
     }
 }
