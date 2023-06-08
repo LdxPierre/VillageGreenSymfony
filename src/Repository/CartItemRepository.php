@@ -85,6 +85,24 @@ class CartItemRepository extends ServiceEntityRepository
         }
     }
 
+    public function clearItems($user, $visitorId = null): void
+    {
+        // get items to delete
+        if (isset($user)) {
+            $items = $this->findAll(['user' => $user]);
+        } else {
+            $items = $this->findAll(['visitorId' => $visitorId]);
+        }
+
+        // queue
+        foreach ($items as $item) {
+            $this->getEntityManager()->remove($item);
+        }
+
+        // flush
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return CartItem[] Returns an array of CartItem objects
     //     */
