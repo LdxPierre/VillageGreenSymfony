@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Passer une commande
+{% endblock %}
+
+{% block body %}
+	<div class="container-xxl d-flex h-100 justify-content-center align-items-center">
+		<div
+			class="col-md-6 p-2 p-md-4 border border-primary rounded-4 bg-light">
+
+			{# heading #}
+			<h1 class="mb-3 fw-normal">Passer une commande</h1>
+
+			{# form #}
+			{{form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'd-flex flex-column gap-3'}})}}
+			<div>
+				<div class="d-flex align-items-center gap-2 mb-1">
+					<span class="material-symbols-outlined text-primary">
+						home
+					</span>
+					{{form_label(form.shipping, 'Adresses de livraison', {'label_attr': {'class':'m-0'}})}}
+				</div>
+				<div class="d-flex align-items-center gap-2 flex-wrap flex-md-nowrap">
+					{{form_widget(form.shipping, {'attr': {'class': 'border border-primary'}})}}
+					<button type='button' class='btn btn-outline-primary border-0 rounded-3 p-0'>
+						<span class="material-symbols-outlined p-2">
+							edit
+						</span>
+					</button>
+					<button type='button' class='btn btn-outline-primary border-0 rounded-3 p-0'>
+						<span class="material-symbols-outlined p-2">
+							add
+						</span>
+					</button>
+				</div>
+				{{form_help(form.shipping)}}
+				{{form_errors(form.shipping)}}
+			</div>
+			<div class='form-check form-switch ps-3'>
+				{{form_widget(form.billingCheck, {'attr': {'class' : 'form-check-input', 'role':'switch'}})}}
+				{{form_label(form.billingCheck, 'Utiliser la même adresse pour la facturation', {'label_attr': {'class':'form-check-label'}})}}
+				{{form_help(form.billingCheck)}}
+				{{form_errors(form.billingCheck)}}
+			</div>
+			<div>
+				<div class="d-flex align-items-center gap-2 mb-1">
+					<span class="material-symbols-outlined text-primary">
+						home
+					</span>
+					{{form_label(form.billing, 'Adresses de livraison', {'label_attr': {'class':'m-0'}})}}
+				</div>
+				<div class="d-flex align-items-center gap-2 flex-wrap flex-md-nowrap">
+					{{form_widget(form.billing, {'attr': {'class': 'border border-primary'}})}}
+					<button type='button' class='btn btn-outline-primary border-0 rounded-3 p-0'>
+						<span class="material-symbols-outlined p-2">
+							edit
+						</span>
+					</button>
+					<button type='button' class='btn btn-outline-primary border-0 rounded-3 p-0'>
+						<span class="material-symbols-outlined p-2">
+							add
+						</span>
+					</button>
+				</div>
+				{{form_help(form.billing)}}
+				{{form_errors(form.billing)}}
+			</div>
+			<div class='text-end'>
+				{{form_widget(form.submit, {'label':'Confirmer la commande','attr': {'class': 'btn btn-accent px-3 rounded-pill'}})}}
+				{{ form_rest(form) }}
+			</div>
+			{{form_end(form)}}
+		</div>
+	</div>
+{% endblock %}

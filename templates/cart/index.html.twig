@@ -99,7 +99,7 @@
 								<span class='fs-5 fw-bold'>{{total}}
 									€</span>
 							</div>
-							<button class='btn btn-accent col-12 rounded-pill'>Valider la commande</button>
+							<a href='{{path('app_order_new')}}' class='btn btn-accent col-12 rounded-pill'>Valider la commande</a>
 						{% else %}
 							<button class='btn btn-secondary col-12 rounded-pill disabled mt-3'>Valider la commande</button>
 						{% endif %}
