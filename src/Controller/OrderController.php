@@ -50,6 +50,11 @@ class OrderController extends AbstractController
         } else {
             $options['address']['Aucune adresse'] = null;
         }
+        // Total
+        foreach ($cartItems as $item) {
+            $price[] = $item->getQuantity() * $item->getProduct()->getPrice();
+        }
+        $total = array_sum($price);
 
         // new address form
         $address = new Address();
@@ -109,6 +114,8 @@ class OrderController extends AbstractController
         return $this->render('order/new.html.twig', [
             'form' => $form->createView(),
             'addressForm' => $addressForm->createView(),
+            'cartItems' => $cartItems,
+            'total' => $total,
         ]);
     }
 }

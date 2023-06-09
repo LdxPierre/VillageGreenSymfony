@@ -4,19 +4,46 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-xxl d-flex h-100 justify-content-center align-items-center">
-		<div
-			class="col-md-6 p-2 p-md-4 border border-primary rounded-4 bg-light">
+	<div
+		class="container-xxl px-2">
 
-			{# heading #}
-			<h1 class="mb-3 fw-normal">Passer une commande</h1>
+		{# heading #}
+		<h1 class="my-2 fw-normal">Passer une commande</h1>
 
-			{# Order form #}
-			{% include "order/_form.html.twig" %}
+		<div class="d-flex flex-column flex-md-row gap-md-4">
+			<div
+				class="col-md-8 order-1">
 
-			{# new address form #}
-			{% include "address/_small_form.html.twig" %}
+				{# Order form #}
+				{% include "order/_form.html.twig" %}
 
+				{# new address form #}
+				{% include "address/_small_form.html.twig" %}
+
+			</div>
+
+			<div class="col-md-4 order-0 order-md-1 mb-3 m-md-0">
+				<div class='border border-primary rounded-4 d-flex flex-column overflow-hidden'>
+					<div class="bg-primary text-light text-center d-flex justify-content-center align-items-center p-3">
+						<h5 class='m-0'>Votre commande</h5>
+					</div>
+					<div class="px-3 pb-3 bg-light">
+						<ul class='m-0 list-unstyled'>
+							{% for item in cartItems %}
+								<li class='fw-light border-bottom py-2'>
+									{{item.quantity}}
+									x
+									{{item.product.name}}
+								</li>
+							{% endfor %}
+						</ul>
+						<div class="d-flex justify-content-between elign-items-center pt-2">
+							<span class='fs-5 fw-bold'>Total :</span>
+							<span class='fs-5 fw-bold'>{{total}}
+								€</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}
