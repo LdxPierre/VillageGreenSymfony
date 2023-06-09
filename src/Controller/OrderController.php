@@ -6,10 +6,11 @@ use DateTime;
 use App\Entity\Order;
 use App\Entity\Address;
 use App\Form\OrderType;
+use App\Entity\OrderItem;
 use App\Form\AddressType;
-use App\Repository\OrderRepository;
 use App\Repository\AddressRepository;
 use App\Repository\CartItemRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +20,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OrderController extends AbstractController
 {
     #[Route('/new', name: 'app_order_new')]
-    public function index(AddressRepository $addressRepository, Request $request, OrderRepository $orderRepository, CartItemRepository $cartItemRepository): Response
+    public function index(AddressRepository $addressRepository, Request $request, CartItemRepository $cartItemRepository, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
         $order = new Order();
 
+        // get CartItems
+        $cartItems = $cartItemRepository->getItems($user);
         // Add user addresses as choices
         $addresses = $addressRepository->findBy(['user' => $user]);
         if ($addresses != null) {
@@ -54,27 +57,37 @@ class OrderController extends AbstractController
 
         // submit order form
         if ($form->isSubmitted() && $form->isValid()) {
+            // get data from form
             $formData = $request->get('order');
             $shippingAddress = $addressRepository->findOneBy(['id' => $formData['shipping']]);
 
-            $order->setStatus('pending')
+            // set status, data, shipAddress, billAddress and persist
+            $order->setStatus('En attente')
                 ->setDate(new DateTime('now'))
                 ->setShipping($shippingAddress);
-
-            // set billing address
             if (isset($formData['billingCheck'])) {
                 $order->setBilling($shippingAddress);
             } else {
                 $order->setBilling($addressRepository->findOneBy(['id' => $formData['billing']]));
             }
+            $entityManager->persist($order);
 
-            // flush order
-            $orderRepository->save($order, true);
+            // new orderItems
+            foreach ($cartItems as $item) {
+                $orderItem = new OrderItem();
+                $orderItem->setProduct($item->getProduct())
+                    ->setOrderParent($order)
+                    ->setPrice($item->getProduct()->getPrice())
+                    ->setQuantity($item->getQuantity());
+                $entityManager->persist($orderItem);
+            }
 
             // remove cart
             $cartItemRepository->clearItems($user);
             $request->getSession()->set('cart', null);
 
+            // flush order, orderItems, cartItems
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_user', [], Response::HTTP_FOUND);
         }

@@ -85,7 +85,7 @@ class CartItemRepository extends ServiceEntityRepository
         }
     }
 
-    public function clearItems($user, $visitorId = null): void
+    public function clearItems($user, $visitorId = null, bool $flush = false): void
     {
         // get items to delete
         if (isset($user)) {
@@ -100,7 +100,9 @@ class CartItemRepository extends ServiceEntityRepository
         }
 
         // flush
-        $this->getEntityManager()->flush();
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
 
     //    /**
