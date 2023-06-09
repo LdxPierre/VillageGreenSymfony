@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\Address;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OrderRepository;
@@ -56,6 +58,14 @@ class Order
 
     #[ORM\Column(length: 70)]
     private ?string $billingCountry = null;
+
+    #[ORM\OneToMany(mappedBy: 'orderParent', targetEntity: OrderItem::class)]
+    private Collection $orderItems;
+
+    public function __construct()
+    {
+        $this->orderItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -240,5 +250,35 @@ class Order
         $this->billingZipCode = $address->getZipcode();
         $this->billingCity = $address->getCity();
         $this->billingCountry = $address->getCountry();
+    }
+
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function addOrderItem(OrderItem $orderItem): self
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems->add($orderItem);
+            $orderItem->setOrderParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderItem(OrderItem $orderItem): self
+    {
+        if ($this->orderItems->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getOrderParent() === $this) {
+                $orderItem->setOrderParent(null);
+            }
+        }
+
+        return $this;
     }
 }
