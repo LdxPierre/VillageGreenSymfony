@@ -10,6 +10,8 @@ use App\Entity\OrderItem;
 use App\Form\AddressType;
 use App\Repository\AddressRepository;
 use App\Repository\CartItemRepository;
+use App\Repository\OrderItemRepository;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +21,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/order')]
 class OrderController extends AbstractController
 {
+    #[Route('/', name: 'app_user_orders')]
+    public function index(OrderRepository $orderRepository): Response
+    {
+        return $this->render('order/index.html.twig', []);
+    }
+
     #[Route('/new', name: 'app_order_new')]
-    public function index(AddressRepository $addressRepository, Request $request, CartItemRepository $cartItemRepository, EntityManagerInterface $entityManager): Response
+    public function new(AddressRepository $addressRepository, Request $request, CartItemRepository $cartItemRepository, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -62,7 +70,9 @@ class OrderController extends AbstractController
             $shippingAddress = $addressRepository->findOneBy(['id' => $formData['shipping']]);
 
             // set status, data, shipAddress, billAddress and persist
-            $order->setStatus('En attente')
+            $order
+                ->setUser($this->getUser())
+                ->setStatus('En attente')
                 ->setDate(new DateTime('now'))
                 ->setShipping($shippingAddress);
             if (isset($formData['billingCheck'])) {
