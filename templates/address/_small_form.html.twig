@@ -1,0 +1,96 @@
+<div id='newAddressModal' class="modal" tabindex='-1' aria-labelby='newAddressModalLabel' aria-hidden='true'>
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		{{form_start(addressForm, {'attr':{'class':'modal-content'}})}}
+		<div class="modal-header border-0">
+			<h5 class='m-0' id='newAddressModalLabel'>Ajouter une nouvelle adresse</h5>
+			<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+		</div>
+		<div class="modal-body d-flex flex-column gap-3">
+
+			<div class='d-flex align-items-center gap-3'>
+				<span class="material-symbols-outlined text-primary">
+					account_circle
+				</span>
+				<div class="form-floating flex-fill">
+					{{form_widget(addressForm.fullname, {'attr': {'placeholder':'Nom complet', 'class': 'border-primary'}})}}
+					{{form_label(addressForm.fullname, 'Nom complet')}}
+					{{form_help(addressForm.fullname)}}
+					{{form_errors(addressForm.fullname)}}
+				</div>
+			</div>
+			<div class='d-flex align-items-center gap-3'>
+				<span class="material-symbols-outlined text-primary">
+					call
+				</span>
+				<div class="form-floating flex-fill">
+					{{form_widget(addressForm.phone, {'attr': {'placeholder':'Téléphone', 'class': 'border-primary'}})}}
+					{{form_label(addressForm.phone, 'Téléphone')}}
+					{{form_help(addressForm.phone)}}
+					{{form_errors(addressForm.phone)}}
+				</div>
+			</div>
+			<div class='d-flex align-items-center gap-3'>
+				<span class="material-symbols-outlined text-primary">
+					home
+				</span>
+				<div class="form-floating flex-fill">
+					{{form_widget(addressForm.address, {'attr': {'placeholder':'Adresse 1', 'class': 'border-primary'}})}}
+					{{form_label(addressForm.address, 'Adresse 1')}}
+					{{form_help(addressForm.address)}}
+					{{form_errors(addressForm.address)}}
+				</div>
+			</div>
+			<div class='d-flex align-items-center gap-3'>
+				<span class="material-symbols-outlined text-primary">
+					home
+				</span>
+				<div class="form-floating flex-fill">
+					{{form_widget(addressForm.zipcode, {'attr': {'placeholder':'Code postal', 'class': 'border-primary'}})}}
+					{{form_label(addressForm.zipcode, 'Code postal')}}
+					{{form_help(addressForm.zipcode)}}
+					{{form_errors(addressForm.zipcode)}}
+				</div>
+			</div>
+			<div class='d-flex align-items-center gap-3'>
+				<span class="material-symbols-outlined text-primary">
+					home
+				</span>
+				<div class="form-floating flex-fill">
+					{{form_widget(addressForm.city, {'attr': {'placeholder':'Ville', 'class': 'border-primary'}})}}
+					{{form_label(addressForm.city, 'Ville')}}
+					{{form_help(addressForm.city)}}
+					{{form_errors(addressForm.city)}}
+				</div>
+			</div>
+			<div class='d-flex align-items-center gap-3'>
+				<span class="material-symbols-outlined text-primary">
+					home
+				</span>
+				<div class="form-floating flex-fill">
+					{{form_widget(addressForm.country, {'attr': {'placeholder':'Pays', 'class': 'border-primary'}})}}
+					{{form_label(addressForm.country, 'Pays')}}
+					{{form_help(addressForm.country)}}
+					{{form_errors(addressForm.country)}}
+				</div>
+			</div>
+			<div class='d-flex align-items-center gap-3'>
+				<span class="material-symbols-outlined text-primary">
+					integration_instructions
+				</span>
+				<div class="form-floating flex-fill">
+					{{form_widget(addressForm.instructions, {'attr': {'placeholder':'Instructions', 'class': 'border-primary'}})}}
+					{{form_label(addressForm.instructions, 'Instructions')}}
+					{{form_help(addressForm.instructions)}}
+					{{form_errors(addressForm.instructions)}}
+				</div>
+			</div>
+
+
+		</div>
+		<div class="modal-footer border-0 gap-2">
+			<button type='button' class='btn border-0 m-0 p-2' data-bs-dismiss='modal'>Annuler</button>
+			<input type="submit" class='btn btn-accent rounded-pill m-0 px-3' value="Ajouter">
+		</div>
+		{{form_end(addressForm)}}
+	</div>
+</div>
