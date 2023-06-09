@@ -47,7 +47,7 @@ class CategoryController extends AbstractController
         // return child categories if exists
         $childCategories = $category->getChildren();
         if ($childCategories[0]) {
-            return $this->render('category/showCategories.html.twig', [
+            return $this->render('category/show.html.twig', [
                 'category' => $category,
                 'childCategories' => $childCategories,
                 'breadcrumbLinks' => $category->getCategoryTree(),
@@ -72,7 +72,7 @@ class CategoryController extends AbstractController
             $filters['max'] = $params['max'] ?? null;
             $filters['sort'] = $params['sort'];
 
-            return $this->render('category/showProducts.html.twig', [
+            return $this->render('category/show.html.twig', [
                 'category' => $category,
                 'products' => $productRepository->filter($filters),
                 'brands' => $productRepository->fetchUniqueBrands($category->getId()),
@@ -83,7 +83,7 @@ class CategoryController extends AbstractController
 
         // render all products
         $products = $category->getProducts();
-        return $this->render('product/index.html.twig', [
+        return $this->render('category/show.html.twig', [
             'category' => $category,
             'products' => $products,
             'brands' => $productRepository->fetchUniqueBrands($category->getId()),
