@@ -21,10 +21,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/order')]
 class OrderController extends AbstractController
 {
-    #[Route('/', name: 'app_user_orders')]
+    #[Route('/', name: 'app_order')]
     public function index(OrderRepository $orderRepository): Response
     {
-        return $this->render('order/index.html.twig', []);
+        $orders = $orderRepository->findBy(['user' => $this->getUser()]);
+
+        return $this->render('order/index.html.twig', [
+            'orders' => $orders,
+        ]);
     }
 
     #[Route('/new', name: 'app_order_new')]

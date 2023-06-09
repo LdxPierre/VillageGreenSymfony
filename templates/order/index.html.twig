@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+{% block title %}Vos commandes
+{% endblock %}
+{% block body %}
+	<div
+		class="container-xxl px-0">
+
+		{# Breadcumbs for medium device #}
+		<nav class='d-none d-md-block' aria-label="breadcrumb">
+			<ol class="breadcrumb my-2">
+				<li class="breadcrumb-item">
+					<a class='p-2' href="{{path('app_home')}}">
+						<span class="material-symbols-outlined">
+							home
+						</span>
+					</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a class='text-decoration-none fw-medium' href="{{path('app_user')}}">Votre compte</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current='page'>Vos commandes</li>
+			</ol>
+		</nav>
+
+		{# Heading #}
+		<div class="d-flex align-items-center gap-2 my-2">
+			<a class='d-flex p-2 text-decoration-none' href="{{path('app_user')}}">
+				<span class="material-symbols-outlined fs-1">
+					arrow_back
+				</span>
+			</a>
+			<h1 class='m-0 fw-normal'>Vos commandes</h1>
+		</div>
+
+		{% for order in orders %}
+			<div class="border border-primary rounded-4 p-2 p-md-3">
+				<p>
+					{{order.id}}
+				</p>
+				<p>
+					{{order.status}}
+				</p>
+				<p>
+					{{order.date|date("m/d/Y")}}
+				</p>
+			</div>
+		{% endfor %}
+
+	</div>
+{% endblock %}
