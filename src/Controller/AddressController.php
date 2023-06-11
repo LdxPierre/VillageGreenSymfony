@@ -16,8 +16,6 @@ class AddressController extends AbstractController
     #[Route('/new', name: 'app_address_new', methods: ['GET', 'POST'])]
     public function newAddress(Request $request, AddressRepository $addressRepository): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         $address = new Address();
         $user = $this->getUser();
         $form = $this->createForm(AddressType::class, $address);

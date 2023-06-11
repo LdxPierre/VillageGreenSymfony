@@ -35,8 +35,6 @@ class OrderController extends AbstractController
     #[Route('/new', name: 'app_order_new')]
     public function new(AddressRepository $addressRepository, Request $request, CartItemRepository $cartItemRepository, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
         $user = $this->getUser();
         $order = new Order();
 
@@ -143,6 +141,11 @@ class OrderController extends AbstractController
     #[Route('/{id}', name: 'app_order_show')]
     function show(Order $order): Response
     {
+        // Redirect if not order owner
+        if ($this->getUser() != $order->getUser()) {
+            return $this->redirectToRoute('app_order');
+        }
+
         // Total
         foreach ($order->getOrderItems() as $item) {
             $price[] = $item->getQuantity() * $item->getProduct()->getPrice();
