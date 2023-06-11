@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+{% block title %}Votre commande
+{% endblock %}
+{% block body %}
+
+	<div
+		class="container-xxl text-center py-2">
+
+		{# Heading #}
+		<h1 classm='my-2'>Votre commande a été enregistrée</h1>
+		<div class="d-flex flex-column gap-2">
+			<span class="material-symbols-outlined text-accent">
+				check_circle
+			</span>
+			<span>
+				Numéro de commande :
+				{{order.id}}
+			</span>
+			<p>Un e-mail de confirmation a été envoyé à l'adresse :
+				{{order.user.email}}
+			</p>
+			<div class="d-flex gap-2 justify-content-center">
+				<a href="{{path('app_home')}}" class='btn btn-outline-primary px-3'>Accueil</a>
+				<a href="{{path('app_order')}}" class='btn btn-primary px-3'>Voir les commandes</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

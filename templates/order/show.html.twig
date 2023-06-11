@@ -1,0 +1,148 @@
+{% extends "base.html.twig" %}
+{% block title %}Vos commandes
+{% endblock %}
+{% block body %}
+	<div
+		class="container-xxl px-0">
+		{# Breadcumbs for medium device #}
+		<nav class='d-none d-md-block' aria-label="breadcrumb">
+			<ol class="breadcrumb my-2">
+				<li class="breadcrumb-item">
+					<a class='p-2' href="{{path('app_home')}}">
+						<span class="material-symbols-outlined">
+							home
+						</span>
+					</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a class='text-decoration-none fw-medium' href="{{path('app_user')}}">Votre compte</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{path('app_order')}}" class='text-decoration-none fw-medium'>Vos commandes</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current='page'>
+					Commande numéro
+					{{order.id}}
+				</li>
+			</ol>
+		</nav>
+
+		{# Heading #}
+		<div class="d-flex align-items-center gap-2 my-2">
+			<a class='d-flex p-2 text-decoration-none' href="{{path('app_order')}}">
+				<span class="material-symbols-outlined fs-1">
+					arrow_back
+				</span>
+			</a>
+			<h1 class='m-0 fw-normal'>Commande
+				{{order.id}}</h1>
+		</div>
+
+		{# order #}
+		<div class="p-2">
+			<div class='d-flex flex-column flex-md-row justify-content-between mb-3 gap-2 mb-2'>
+				<div class='d-flex flex-column flex-md-row gap-md-3 gap-1'>
+					<span>
+						Numéro de commande :
+						{{order.id}}
+					</span>
+					<span>Date de commande :
+						{{order.date|date('d-m-Y')}}
+					</span>
+					<span class='fw-bold'>Total TTC :
+						{{total}}
+						€
+					</span>
+				</div>
+				<div>
+					<button class='btn btn-primary disabled col-12 col-md-auto rounded-pill px-3'>Télécharger une facture</button>
+				</div>
+			</div>
+			<div class='mb-3'>
+				<h2 class="fs-4">Status de commande</h2>
+				{{order.status}}
+			</div>
+			<div class='mb-3'>
+				<h2 class="fs-4">Détails de la commande</h2>
+				<div class="row row-cols-2 row-cols-md-5 g-2">
+					{% for item in order.orderItems %}
+						<div class="col">
+							<div class='d-flex flex-column justify-content-between border border-primary rounded-4 gap-2 p-2 bg-light h-100'>
+								<div>
+									<img src="https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/561026/18011037_800.jpg" alt="{{item.product.name}}" class='img-fluid mb-2'>
+									<a href="{{path('app_product_show', {'url': item.product.url})}}" class='text-decoration-none'>
+										{{item.product.name}}
+									</a>
+								</div>
+								<div class='d-flex flex-column gap-2'>
+									<span>
+										Quantité :
+										{{item.quantity}}
+									</span>
+									<span>
+										Prix unité TTC :
+										{{item.product.price}}
+										€
+									</span>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="row row-cols-1 row-cols-md-2 g-2">
+				<div class="col">
+					<h2 class="fs-4">Adresse de livraison</h2>
+					<div class='d-flex flex-column gap-1 p-2 border border-primary rounded-4'>
+						<span>
+							Nom :
+							{{order.shippingName}}
+						</span>
+						<span>
+							Adresse :
+							{{order.shippingAddress}}
+						</span>
+						<span>
+							Code postal :
+							{{order.shippingZipcode}}
+						</span>
+						<span>
+							Ville :
+							{{order.shippingCity}}
+						</span>
+						<span>
+							Pays :
+							{{order.shippingCountry}}
+						</span>
+					</div>
+				</div>
+				<div class="col">
+					<h2 class="fs-4">Adresse de facturation</h2>
+					<div class="d-flex flex-column gap-1 p-2 border border-primary rounded-4">
+						<span>
+							Nom :
+							{{order.billingName}}
+						</span>
+						<span>
+							Adresse :
+							{{order.billingAddress}}
+						</span>
+						<span>
+							Code postal :
+							{{order.billingZipcode}}
+						</span>
+						<span>
+							Ville :
+							{{order.billingCity}}
+						</span>
+						<span>
+							Pays :
+							{{order.billingCountry}}
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

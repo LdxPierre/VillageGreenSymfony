@@ -8,12 +8,13 @@ use App\Entity\Address;
 use App\Form\OrderType;
 use App\Entity\OrderItem;
 use App\Form\AddressType;
+use App\Repository\OrderRepository;
 use App\Repository\AddressRepository;
 use App\Repository\CartItemRepository;
-use App\Repository\OrderItemRepository;
-use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,7 @@ class OrderController extends AbstractController
     #[Route('/', name: 'app_order')]
     public function index(OrderRepository $orderRepository): Response
     {
-        $orders = $orderRepository->findBy(['user' => $this->getUser()]);
+        $orders = $orderRepository->findBy(['user' => $this->getUser()], ['date' => 'DESC']);
 
         return $this->render('order/index.html.twig', [
             'orders' => $orders,
@@ -32,7 +33,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_order_new')]
-    public function new(AddressRepository $addressRepository, Request $request, CartItemRepository $cartItemRepository, EntityManagerInterface $entityManager): Response
+    public function new(AddressRepository $addressRepository, Request $request, CartItemRepository $cartItemRepository, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -108,13 +109,48 @@ class OrderController extends AbstractController
             // flush order, orderItems, cartItems
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user', [], Response::HTTP_FOUND);
+            // send confirmation email
+            $email = (new TemplatedEmail())
+                ->from('noreply@village-green.com')
+                ->to($user->getEmail())
+                ->subject('Votre commande a été enregistrée')
+                ->htmlTemplate('order/confirmation_email.html.twig')
+                ->context(['order' => $order]);
+
+            $mailer->send($email);
+
+            return $this->redirectToRoute('app_order_success', [], Response::HTTP_FOUND);
         }
 
         return $this->render('order/new.html.twig', [
             'form' => $form->createView(),
             'addressForm' => $addressForm->createView(),
             'cartItems' => $cartItems,
+            'total' => $total,
+        ]);
+    }
+
+    #[Route('/success', name: 'app_order_success')]
+    function success(OrderRepository $orderRepository): Response
+    {
+        $order = $orderRepository->lastOrder($this->getUser());
+
+        return $this->render('order/success.html.twig', [
+            'order' => $order,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_order_show')]
+    function show(Order $order): Response
+    {
+        // Total
+        foreach ($order->getOrderItems() as $item) {
+            $price[] = $item->getQuantity() * $item->getProduct()->getPrice();
+        }
+        $total = array_sum($price);
+
+        return $this->render('order/show.html.twig', [
+            'order' => $order,
             'total' => $total,
         ]);
     }

@@ -32,19 +32,38 @@
 			<h1 class='m-0 fw-normal'>Vos commandes</h1>
 		</div>
 
-		{% for order in orders %}
-			<div class="border border-primary rounded-4 p-2 p-md-3">
-				<p>
-					{{order.id}}
-				</p>
-				<p>
-					{{order.status}}
-				</p>
-				<p>
-					{{order.date|date("m/d/Y")}}
-				</p>
-			</div>
-		{% endfor %}
-
+		{# order list #}
+		<div class="row row-cols-1 row-cols-md-2 g-2 px-2">
+			{% for order in orders %}
+				<div class="col">
+					<div class="d-flex flex-column border border-primary rounded-4 bg-light">
+						<div class='d-flex gap-2 p-2 border-bottom justify-content-between'>
+							<span>Commande passée le
+								{{order.date|date('d-m-Y')}}
+							</span>
+							<span>Numéro de commande :
+								{{order.id}}
+							</span>
+						</div>
+						<div class="p-2">
+							{% for item in order.orderItems[:1] %}
+								<a href="{{path('app_product_show', {'url': item.product.url})}}" class='text-decoration-none'>
+									<img src="https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/561026/18011037_800.jpg" height='75px' alt="{{item.product.name}}">
+								</a>
+							{% endfor %}
+							{% if order.orderItems|length - 1 %}
+								<span class='rounded border border-primary p-2 ms-3'>
+									+
+									{{order.orderItems|length - 1}}
+								</span>
+							{% endif %}
+						</div>
+						<div class="border-top p-2 text-md-end">
+							<a href="{{path('app_order_show', {'id': order.id})}}" class='link-primary text-decoration-none'>Voir les détails de la commande</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 	</div>
-{% endblock %}
+</div>{% endblock %}
