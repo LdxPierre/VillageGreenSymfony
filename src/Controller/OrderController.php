@@ -51,7 +51,7 @@ class OrderController extends AbstractController
         }
         // Total
         foreach ($cartItems as $item) {
-            $price[] = $item->getQuantity() * $item->getProduct()->getPrice();
+            $price[] = $item->getTotal();
         }
         $total = array_sum($price);
 
@@ -146,15 +146,9 @@ class OrderController extends AbstractController
             return $this->redirectToRoute('app_order');
         }
 
-        // Total
-        foreach ($order->getOrderItems() as $item) {
-            $price[] = $item->getQuantity() * $item->getProduct()->getPrice();
-        }
-        $total = array_sum($price);
-
         return $this->render('order/show.html.twig', [
             'order' => $order,
-            'total' => $total,
+            'total' => $order->getTotal(),
         ]);
     }
 }

@@ -29,7 +29,7 @@ class CartController extends AbstractController
 
         if ($cart != null) {
             foreach ($cart as $item) {
-                $price[] = $item->getQuantity() * $item->getProduct()->getPrice();
+                $price[] = $item->getTotal();
             }
             $total = array_sum($price);
         } else {

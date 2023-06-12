@@ -9,8 +9,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OrderRepository;
 
-use function PHPUnit\Framework\throwException;
-
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 class Order
@@ -296,5 +294,15 @@ class Order
         $this->date = $date;
 
         return $this;
+    }
+
+    function getTotal(): float
+    {
+        $total = 0;
+        foreach ($this->orderItems as $item) {
+            $total += $item->getProduct()->getPrice() * $item->getQuantity();
+        }
+
+        return $total;
     }
 }
