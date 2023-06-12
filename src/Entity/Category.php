@@ -2,25 +2,36 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(normalizationContext: ['groups' => ['get']])]
+#[Get()]
+#[GetCollection()]
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
+    #[Groups(['get'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['get'])]
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
+    #[Groups(['get'])]
     #[ORM\Column(length: 100)]
     private ?string $url = null;
 
+    #[Groups(['get'])]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     private ?self $parent = null;
 
@@ -143,10 +154,10 @@ class Category
         $array = [];
         $value = $this->getParent();
 
-        if ($value){
+        if ($value) {
             array_push($array, $value);
-            
-            for ($i=0; $i < 10; $i++) { 
+
+            for ($i = 0; $i < 10; $i++) {
                 $value = $value->getParent();
                 if ($value) {
                     array_push($array, $value);
