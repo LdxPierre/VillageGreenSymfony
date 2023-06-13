@@ -35,6 +35,7 @@ class OrderController extends AbstractController
     #[Route('/new', name: 'app_order_new')]
     public function new(AddressRepository $addressRepository, Request $request, CartItemRepository $cartItemRepository, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
+        /** @var User */
         $user = $this->getUser();
         $order = new Order();
 
