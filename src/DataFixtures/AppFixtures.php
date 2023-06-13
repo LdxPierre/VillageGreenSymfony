@@ -2,15 +2,21 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Category;
+use App\Entity\CartItem;
+use DateTime;
+use App\Entity\User;
 use App\Entity\Product;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+
+        // categories
+
         $mainCat1 = new Category();
         $mainCat1->setName('Guitares & Basses');
         $mainCat1->setUrl('guitares-basses');
@@ -61,6 +67,8 @@ class AppFixtures extends Fixture
         $sub6->setUrl('claviers-initiation');
         $sub6->setParent($sub5);
         $manager->persist($sub6);
+
+        // Product
 
         $product1 = new Product();
         $product1->setBrand('Millenium Focus');
@@ -115,6 +123,28 @@ class AppFixtures extends Fixture
         $product6->setStock(78);
         $product6->setCategory($sub6);
         $manager->persist($product6);
+
+        // User
+
+        $user = new User();
+        $user->setEmail('test@test.fr')
+            ->setPassword('$2y$13$duZgvLpAoBhgcnjNKhM2Zul4qww8nTLQsYwJAGuK7Pz6F0EdF2YFS')
+            ->setRegisteryDate(new DateTime('now'));
+        $manager->persist($user);
+
+        // CartItems
+
+        $cartItem = new CartItem();
+        $cartItem->setUser($user)
+            ->setProduct($product1)
+            ->setQuantity(5);
+        $manager->persist($cartItem);
+
+        $cartItem = new CartItem();
+        $cartItem->setUser($user)
+            ->setProduct($product2)
+            ->setQuantity(10);
+        $manager->persist($cartItem);
 
         $manager->flush();
     }
