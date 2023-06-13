@@ -41,6 +41,12 @@ class OrderController extends AbstractController
 
         // get CartItems
         $cartItems = $cartItemRepository->getItems($user);
+
+        // Redirect if empty cart
+        if (!$cartItems[0]) {
+            return $this->redirectToRoute('app_cart');
+        }
+
         // Add user addresses as choices
         $addresses = $addressRepository->findBy(['user' => $user]);
         if ($addresses != null) {
