@@ -20,51 +20,60 @@ class AppFixtures extends Fixture
         $mainCat1 = new Category();
         $mainCat1->setName('Guitares & Basses');
         $mainCat1->setUrl('guitares-basses');
+        $mainCat1->setContent('categories');
         $manager->persist($mainCat1);
 
         $mainCat2 = new Category();
         $mainCat2->setName('Batteries & Percussions');
         $mainCat2->setUrl('batteries-percussions');
+        $mainCat2->setContent('categories');
         $manager->persist($mainCat2);
 
         $mainCat3 = new Category();
         $mainCat3->setName('Pianos & Claviers');
         $mainCat3->setUrl('pianos-claviers');
+        $mainCat3->setContent('categories');
         $manager->persist($mainCat3);
 
         $sub1 = new Category();
         $sub1->setName('Guitares Electriques');
         $sub1->setUrl('guitares-electriques');
         $sub1->setParent($mainCat1);
+        $sub1->setContent('categories');
         $manager->persist($sub1);
 
         $sub2 = new Category();
         $sub2->setName('Sets Guitare');
         $sub2->setUrl('sets-guitare');
+        $sub2->setContent('products');
         $sub2->setParent($sub1);
         $manager->persist($sub2);
 
         $sub3 = new Category();
         $sub3->setName('Batteries Acoustiques');
         $sub3->setUrl('batteries-acoustiques');
+        $sub3->setContent('categories');
         $sub3->setParent($mainCat2);
         $manager->persist($sub3);
 
         $sub4 = new Category();
         $sub4->setName('Batteries Acoustiques Complètes');
         $sub4->setUrl('batteries-acoustiques-complete');
+        $sub4->setContent('products');
         $sub4->setParent($sub3);
         $manager->persist($sub4);
 
         $sub5 = new Category();
         $sub5->setName('Claviers Arrangeurs');
         $sub5->setUrl('claviers-arrangeurs');
+        $sub5->setContent('categories');
         $sub5->setParent($mainCat3);
         $manager->persist($sub5);
 
         $sub6 = new Category();
         $sub6->setName('Claviers d\'initiation');
         $sub6->setUrl('claviers-initiation');
+        $sub6->setContent('products');
         $sub6->setParent($sub5);
         $manager->persist($sub6);
 

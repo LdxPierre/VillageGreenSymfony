@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,6 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(normalizationContext: ['groups' => ['get']])]
 #[Get]
 #[GetCollection()]
+#[ApiFilter(SearchFilter::class, properties: ['category', 'exact'])]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {

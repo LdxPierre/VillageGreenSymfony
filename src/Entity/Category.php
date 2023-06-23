@@ -41,6 +41,10 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
     private Collection $products;
 
+    #[Groups(['get'])]
+    #[ORM\Column(length: 20)]
+    private ?string $content = null;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -167,5 +171,17 @@ class Category
             }
         }
         return array_reverse($array);
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
+
+        return $this;
     }
 }
