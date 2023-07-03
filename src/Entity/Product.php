@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource()]
-#[Get()]
+#[Get(normalizationContext: ['groups' => ['get']])]
 #[GetCollection(normalizationContext: ['groups' => ['get']], paginationItemsPerPage: 50)]
 #[Post(denormalizationContext: ['groups' => ['post']])]
 #[ApiFilter(SearchFilter::class, properties: ['category' => 'exact', 'name' => 'exact'])]
