@@ -9,16 +9,20 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(normalizationContext: ['groups' => ['get']])]
-#[Get]
-#[GetCollection()]
-#[ApiFilter(SearchFilter::class, properties: ['category', 'exact'])]
+#[ApiResource()]
+#[Get()]
+#[GetCollection(normalizationContext: ['groups' => ['get']], paginationItemsPerPage: 50)]
+#[Post(denormalizationContext: ['groups' => ['post']])]
+#[ApiFilter(SearchFilter::class, properties: ['category' => 'exact', 'name' => 'exact'])]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'Un produit du même nom existe déjà')]
 class Product
 {
     #[Groups(['get'])]
@@ -27,31 +31,31 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['get'])]
+    #[Groups(['get', 'post'])]
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[Groups(['get'])]
+    #[Groups(['get', 'post'])]
     #[ORM\Column(length: 100)]
     private ?string $url = null;
 
-    #[Groups(['get'])]
+    #[Groups(['get', 'post'])]
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[Groups(['get'])]
+    #[Groups(['get', 'post'])]
     #[ORM\Column(length: 50)]
     private ?string $brand = null;
 
-    #[Groups(['get'])]
+    #[Groups(['get', 'post'])]
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $price = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: CartItem::class, orphanRemoval: true)]
     private Collection $cartItems;
 
-    #[Groups(['get'])]
+    #[Groups(['get', 'post'])]
     #[ORM\Column]
     private ?int $stock = null;
 

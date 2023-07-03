@@ -2,18 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(normalizationContext: ['groups' => ['get']])]
-#[Get()]
-#[GetCollection()]
+#[Get(normalizationContext: ['groups' => ['get']])]
+#[GetCollection(normalizationContext: ['groups' => ['get']])]
+#[ApiFilter(SearchFilter::class, properties: ['content', 'exact'])]
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {

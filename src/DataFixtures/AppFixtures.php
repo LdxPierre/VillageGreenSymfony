@@ -133,6 +133,17 @@ class AppFixtures extends Fixture
         $product6->setCategory($sub6);
         $manager->persist($product6);
 
+        for ($i = 4; $i < 200; $i++) {
+            $product = new Product();
+            $product->setBrand('Marque')
+                ->setName('Produit #' . $i)
+                ->setUrl('url-' . $i)
+                ->setPrice(100 + $i)
+                ->setStock(200 + $i)
+                ->setCategory($sub2);
+            $manager->persist($product);
+        }
+
         // User
 
         $user = new User();
