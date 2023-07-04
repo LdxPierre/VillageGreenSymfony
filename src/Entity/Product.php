@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\Collection;
@@ -16,46 +17,47 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource()]
-#[Get(normalizationContext: ['groups' => ['get']])]
+#[ApiResource(security: "is_granted('ROLE_USER')")]
+#[Get(normalizationContext: ['groups' => ['product']])]
 #[GetCollection(normalizationContext: ['groups' => ['get']], paginationItemsPerPage: 50)]
 #[Post(denormalizationContext: ['groups' => ['post']])]
+#[Patch(denormalizationContext: ['groups' => ['patch']])]
 #[ApiFilter(SearchFilter::class, properties: ['category' => 'exact', 'name' => 'exact'])]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[UniqueEntity(fields: ['name'], message: 'Un produit du même nom existe déjà')]
 class Product
 {
-    #[Groups(['get'])]
+    #[Groups(['get', 'product'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(['get', 'post'])]
+    #[Groups(['get', 'post', 'product', 'patch'])]
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[Groups(['get', 'post'])]
+    #[Groups(['get', 'post', 'product', 'patch'])]
     #[ORM\Column(length: 100)]
     private ?string $url = null;
 
-    #[Groups(['get', 'post'])]
+    #[Groups(['get', 'post', 'product', 'patch'])]
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[Groups(['get', 'post'])]
+    #[Groups(['get', 'post', 'product', 'patch'])]
     #[ORM\Column(length: 50)]
     private ?string $brand = null;
 
-    #[Groups(['get', 'post'])]
+    #[Groups(['get', 'post', 'product', 'patch'])]
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $price = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: CartItem::class, orphanRemoval: true)]
     private Collection $cartItems;
 
-    #[Groups(['get', 'post'])]
+    #[Groups(['get', 'post', 'product', 'patch'])]
     #[ORM\Column]
     private ?int $stock = null;
 
