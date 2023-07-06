@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Get;
@@ -22,7 +23,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[GetCollection(normalizationContext: ['groups' => ['get']], paginationItemsPerPage: 50)]
 #[Post(denormalizationContext: ['groups' => ['post']])]
 #[Patch(denormalizationContext: ['groups' => ['patch']])]
-#[ApiFilter(SearchFilter::class, properties: ['category' => 'exact', 'name' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['category' => 'exact', 'name' => 'partial'])]
+#[ApiFilter(OrderFilter::class, properties: ['id', 'name', 'brand', 'price', 'stock'])]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[UniqueEntity(fields: ['name'], message: 'Un produit du même nom existe déjà')]
 class Product
