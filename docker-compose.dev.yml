@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    network_mode: "host"
+    platform: linux/x86_64
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+    volumes:
+      - type: volume
+        source: dbVG
+        target: /var/lib/mysql
+  php:
+    build: 
+      context: .
+      dockerfile: Dockerfile.php
+    network_mode: "host"
+    volumes:
+      - type: volume
+        source: tls
+        target: /root/.symfony5/certs
+      - type: volume
+        target: /app/vendor
+      - type: bind
+        source: .
+        target: /app
+    depends_on:
+      - mariadb
+  encore:
+    build:
+      context: .
+      dockerfile: Dockerfile.encore.dev
+    network_mode: 'host'
+    volumes:
+      - type: volume
+        source: tls
+        target: /root/.symfony5/certs
+      - type: volume
+        target: /app/node_modules
+      - type: bind
+        source: .
+        target: /app
+volumes:
+  dbVG:
+  tls:
