@@ -3,20 +3,20 @@ version: '3.9'
 services:
   mariadb:
     image: mariadb:latest
-    network_mode: "host"
     platform: linux/x86_64
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=1234
+      MYSQL_ROOT_PASSWORD: 1234
     volumes:
       - type: volume
         source: dbVG
         target: /var/lib/mysql
+    ports:
+      - 3305:3306
   php:
     build: 
       context: .
       dockerfile: Dockerfile.php
-    network_mode: "host"
     volumes:
       - type: volume
         source: tls
@@ -28,11 +28,12 @@ services:
         target: /app
     depends_on:
       - mariadb
+    ports:
+      - 8000:8000
   encore:
     build:
       context: .
       dockerfile: Dockerfile.encore.dev
-    network_mode: 'host'
     volumes:
       - type: volume
         source: tls
@@ -44,7 +45,8 @@ services:
         target: /app
   mail:
     image: mailhog/mailhog
-    network_mode: "host"
+    ports: 
+      - 8025:8025
 volumes:
   dbVG:
   tls:

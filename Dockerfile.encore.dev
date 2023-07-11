@@ -2,4 +2,4 @@ FROM node:lts-alpine
 WORKDIR /app
 COPY ./package.json .
 RUN yarn 
-CMD ["yarn", "dev-server"]
+CMD ["yarn", "dev-server", "--https", "--host 0.0.0.0"]
